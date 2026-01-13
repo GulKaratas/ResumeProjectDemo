@@ -1,0 +1,26 @@
+﻿@model List<ResumeProjectDemo.Entities.Experience>
+
+<section id="experience" class="pb-0">
+	<div class="container">
+		<div class="section-title h2 text-center mb-8">
+			<h2 class="mb-0">Deneyimlerim</h2>
+			<span class="title-letter">D</span>
+		</div>
+
+		@foreach(var experience in Model)
+		{
+			<div class="row">
+				<div class="col-lg-4 mb-1 mb-lg-0">
+					<p class="h5 mb-0">@experience.Title</p>
+					<p class="opacity-75">@experience.WorkDate</p>
+				</div>
+				<div class="col-lg-8">
+<p>@experience.Description</p>
+				</div>
+			</div>
+
+			<hr />
+        }
+
+	</div>
+</section>

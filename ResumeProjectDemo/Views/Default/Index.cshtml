@@ -1,0 +1,73 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+
+@await Component.InvokeAsync("_DefaultHeadComponentPartial")
+
+<body class="slideshow-zoom-background">
+
+	<div id="preloader" class="preloader">
+		<div class="loader-status">
+			<div class="spinner"></div>
+		</div>
+	</div>
+
+	<div class="site-container">
+
+		<div id="top"></div>
+
+		<!-- Mobile logo -->
+		<a href="#" class="mobile-logo mobile-logo-light bg-dark">
+			<span>Gül Karataş</span>
+		</a>
+
+		<!-- Navigation toggle -->
+		<button type="button" id="navigation-toggle" class="nav-toggle nav-toggle-light bg-dark">
+			<span></span>
+		</button>
+
+		<!-- Site header -->
+		@await Component.InvokeAsync("_DefaultHeaderComponentPartial")
+
+		<!-- Header overlay -->
+		<div class="header-overlay">
+			<div class="overlay-inner bg-dark opacity-80"></div>
+		</div>
+
+		<!-- Back to top button -->
+		<button type="button" id="backtotop" class="btn btn-primary btn-icon">
+			<span class="btn-icon-inner fas fa-angle-up"></span>
+		</button>
+
+		<!-- Page wrapper -->
+		<div class="page-wrapper">
+            @await Component.InvokeAsync("_DefaultFeatureComponentPartial")
+
+			<div class="page-content">
+
+				@await Component.InvokeAsync("_DefaultAboutComponentPartial")
+
+				@await Component.InvokeAsync("_DefaultSkillComponentPartial")
+			
+				@await Component.InvokeAsync("_DefaultExperienceComponentPartial")
+				@await Component.InvokeAsync("_DefaultServiceComponentPartial")
+				@await Component.InvokeAsync("_DefaultPortfolioComponentPartial")
+				@await Component.InvokeAsync("_DefaultTestimonialComponentPartial")
+				@await Component.InvokeAsync("_DefaultContactComponentPartial")
+				@await Component.InvokeAsync("_DeafultFooterComponentPartial")
+			
+		
+
+			</div><!--end .page-content -->
+		</div><!-- end .page-wrapper -->
+
+	</div>
+
+	@await Component.InvokeAsync("_DefaultScriptsComponentPartial")
+
+</body>
+</html>
