@@ -1,159 +1,30 @@
-﻿<section id="portfolio">
-	<div class="container">
-		<div class="row mb-8">
-			<div class="col-lg-10 col-xl-8 mx-lg-auto text-center">
-				<div class="section-title h2 mb-3">
-					<h2 class="mb-0">Portfolio</h2>
-					<span class="title-letter">P</span>
-				</div>
-				<nav class="portfolio-filter isotope-filter">
-					<ul class="justify-content-center">
-						<li><a href="#" class="active" data-filter="*">Tüm Kategoriler</a></li>
-						<li><a href="#" data-filter=".web">Web</a></li>
-						<li><a href="#" data-filter=".brand">Mobil</a></li>
-						<li><a href="#" data-filter=".design">Veri Analatiği</a></li>
-						<li><a href="#" data-filter=".design2">Siber Güvenlik</a></li>
-					</ul>
-				</nav>
-			</div>
-		</div>
-	</div>
+﻿@model List<ResumeProjectDemo.Entities.Portfolio>
+
+<section id="portfolio">
+	@await Component.InvokeAsync("_DefaultCategoriesComponentPartial")
+
 	<div class="container">
 		<div class="portfolio-container isotope-container row my-n2 mx-sm-n2">
-			<div class="isotope-item col-sm-6 col-lg-4 py-2 px-sm-2 web">
-				<div class="portfolio-item details-inside">
-					<a href="portfolio-single-1.html">
-						<div class="item-media">
-							<img src="demo/images/portfolio/project-1.jpg" alt="">
-						</div>
-						<div class="item-overlay bg-dark"></div>
-						<div class="item-details">
-							<h4 class="h5">Love</h4>
-							<p class="font-italic">Web</p>
-						</div>
-					</a>
+			@foreach(var item in Model)
+			{
+				<div class="isotope-item col-sm-6 col-lg-4 py-2 px-sm-2 web">
+					<div class="portfolio-item details-inside">
+						<a href="portfolio-single-1.html">
+							<div class="item-media">
+								<img src="@item.ImageUrl" alt="">
+							</div>
+							<div class="item-overlay bg-dark"></div>
+							<div class="item-details">
+								<h4 class="h5">@item.Title</h4>
+								<p class="font-italic">Kategori Adı</p>
+							</div>
+						</a>
+					</div>
 				</div>
-			</div>
+			}
+			
 
-			<div class="isotope-item col-sm-6 col-lg-4 py-2 px-sm-2 brand">
-				<div class="portfolio-item details-inside">
-					<a href="portfolio-single-2.html">
-						<div class="item-media">
-							<img src="demo/images/portfolio/project-2.jpg" alt="">
-						</div>
-						<div class="item-overlay bg-dark"></div>
-						<div class="item-details">
-							<h4 class="h5">Beautiful Girl - Gallery</h4>
-							<p class="font-italic">Brand</p>
-						</div>
-					</a>
-				</div>
-			</div>
-
-			<div class="isotope-item col-sm-6 col-lg-4 py-2 px-sm-2 web">
-				<div class="portfolio-item details-inside">
-					<a href="portfolio-single-3.html">
-						<div class="item-media">
-							<img src="demo/images/portfolio/project-3.jpg" alt="">
-						</div>
-						<div class="item-overlay bg-dark"></div>
-						<div class="item-details text-white">
-							<h4 class="h5">Future City - Youtube Iframe</h4>
-							<p class="font-italic">Web</p>
-						</div>
-					</a>
-				</div>
-			</div>
-
-			<div class="isotope-item col-sm-6 col-lg-4 py-2 px-sm-2 design">
-				<div class="portfolio-item details-inside">
-					<a href="portfolio-single-2.html">
-						<div class="item-media">
-							<img src="demo/images/portfolio/project-4.jpg" alt="">
-						</div>
-						<div class="item-overlay bg-dark"></div>
-						<div class="item-details text-white">
-							<h4 class="h5">Golden Gate Bridge</h4>
-							<p class="font-italic">Design</p>
-						</div>
-					</a>
-				</div>
-			</div>
-
-			<div class="isotope-item col-sm-6 col-lg-4 py-2 px-sm-2 web">
-				<div class="portfolio-item details-inside">
-					<a href="portfolio-single-1.html">
-						<div class="item-media">
-							<img src="demo/images/portfolio/project-9.jpg" alt="">
-						</div>
-						<div class="item-overlay bg-dark"></div>
-						<div class="item-details text-white">
-							<h4 class="h5">Beach</h4>
-							<p class="font-italic">Web</p>
-						</div>
-					</a>
-				</div>
-			</div>
-
-			<div class="isotope-item col-sm-6 col-lg-4 py-2 px-sm-2 web">
-				<div class="portfolio-item details-inside">
-					<a href="portfolio-single-3.html">
-						<div class="item-media">
-							<img src="demo/images/portfolio/project-6.jpg" alt="">
-						</div>
-						<div class="item-overlay bg-dark"></div>
-						<div class="item-details text-white">
-							<h4 class="h5">Mountains</h4>
-							<p class="font-italic">Web</p>
-						</div>
-					</a>
-				</div>
-			</div>
-
-			<div class="isotope-item col-sm-6 col-lg-4 py-2 px-sm-2 web">
-				<div class="portfolio-item details-inside">
-					<a href="portfolio-single-1.html">
-						<div class="item-media">
-							<img src="demo/images/portfolio/project-10.jpg" alt="">
-						</div>
-						<div class="item-overlay bg-dark"></div>
-						<div class="item-details text-white">
-							<h4 class="h5">Adventure</h4>
-							<p class="font-italic">Web</p>
-						</div>
-					</a>
-				</div>
-			</div>
-
-			<div class="isotope-item col-sm-6 col-lg-4 py-2 px-sm-2 web">
-				<div class="portfolio-item details-inside">
-					<a href="portfolio-single-2.html">
-						<div class="item-media">
-							<img src="demo/images/portfolio/project-11.jpg" alt="">
-						</div>
-						<div class="item-overlay bg-dark"></div>
-						<div class="item-details text-white">
-							<h4 class="h5">Waterfall</h4>
-							<p class="font-italic">Web</p>
-						</div>
-					</a>
-				</div>
-			</div>
-
-			<div class="isotope-item col-sm-6 col-lg-4 py-2 px-sm-2 web">
-				<div class="portfolio-item details-inside">
-					<a href="portfolio-single-1.html">
-						<div class="item-media">
-							<img src="demo/images/portfolio/project-5.jpg" alt="">
-						</div>
-						<div class="item-overlay bg-dark"></div>
-						<div class="item-details text-white">
-							<h4 class="h5">Sea</h4>
-							<p class="font-italic">Web</p>
-						</div>
-					</a>
-				</div>
-			</div>
+			
 		</div><!-- .portfolio-container end -->
 	</div>
 </section>
