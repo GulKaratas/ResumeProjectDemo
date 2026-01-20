@@ -1,0 +1,142 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html class="dark" lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Developer Portfolio Admin Dashboard</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet" />
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#2eb8b8",
+                        "background-light": "#f3f4f6",
+                        "background-dark": "#1a1a1a",
+                        "surface-dark": "#262626",
+                        "border-dark": "#404040",
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #1a1a1a;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #404040;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 antialiased font-display">
+    <div class="flex h-screen overflow-hidden">
+        <!-- Sidebar Navigation -->
+        <aside class="w-64 flex-shrink-0 bg-white dark:bg-[#121212] border-r border-slate-200 dark:border-border-dark flex flex-col">
+            <div class="p-6 flex items-center gap-3">
+                <div class="size-10 rounded-lg bg-primary flex items-center justify-center text-white">
+                    <span class="material-symbols-outlined">terminal</span>
+                </div>
+                <div>
+                    <h1 class="text-sm font-bold tracking-tight">DevAdmin</h1>
+                    <p class="text-[10px] text-slate-500 uppercase tracking-widest">Senior .NET Dev</p>
+                </div>
+            </div>
+            <nav class="flex-1 px-4 py-2 space-y-1 overflow-y-auto custom-scrollbar">
+                <div class="text-[10px] font-semibold text-slate-400 uppercase px-3 py-2 mt-4 mb-1">General</div>
+                <a class="flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg hover:bg-slate-100 dark:hover:bg-white/5 transition-colors" href="#">
+                    <span class="material-symbols-outlined text-[20px]">dashboard</span>
+                    Dashboard
+                </a>
+                <a class="flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg hover:bg-slate-100 dark:hover:bg-white/5 transition-colors" href="#">
+                    <span class="material-symbols-outlined text-[20px]">person</span>
+                    About Me
+                </a>
+                <a class="flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg hover:bg-slate-100 dark:hover:bg-white/5 transition-colors" href="#">
+                    <span class="material-symbols-outlined text-[20px]">bolt</span>
+                    Skills
+                </a>
+                <a class="flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg hover:bg-slate-100 dark:hover:bg-white/5 transition-colors" href="#">
+                    <span class="material-symbols-outlined text-[20px]">work</span>
+                    Experience
+                </a>
+                <a class="flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg bg-primary/10 text-primary border border-primary/20" href="#">
+                    <span class="material-symbols-outlined text-[20px]">folder_open</span>
+                    Projects
+                </a>
+                <div class="text-[10px] font-semibold text-slate-400 uppercase px-3 py-2 mt-6 mb-1">Education &amp; Verification</div>
+                <a class="flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg hover:bg-slate-100 dark:hover:bg-white/5 transition-colors" href="#">
+                    <span class="material-symbols-outlined text-[20px]">school</span>
+                    Education
+                </a>
+                <a class="flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg hover:bg-slate-100 dark:hover:bg-white/5 transition-colors" href="#">
+                    <span class="material-symbols-outlined text-[20px]">verified</span>
+                    Certificates
+                </a>
+                <div class="text-[10px] font-semibold text-slate-400 uppercase px-3 py-2 mt-6 mb-1">Content</div>
+                <a class="flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg hover:bg-slate-100 dark:hover:bg-white/5 transition-colors" href="#">
+                    <span class="material-symbols-outlined text-[20px]">article</span>
+                    Blog
+                </a>
+                <a class="flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg hover:bg-slate-100 dark:hover:bg-white/5 transition-colors" href="#">
+                    <span class="material-symbols-outlined text-[20px]">mail</span>
+                    Messages
+                    <span class="ml-auto bg-primary text-white text-[10px] px-1.5 py-0.5 rounded-full font-bold italic">4</span>
+                </a>
+            </nav>
+            <div class="p-4 border-t border-slate-200 dark:border-border-dark">
+                <a class="flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg text-slate-500 hover:text-red-500 transition-colors" href="#">
+                    <span class="material-symbols-outlined text-[20px]">logout</span>
+                    Logout
+                </a>
+            </div>
+        </aside>
+        <!-- Main Content -->
+        <main class="flex-1 flex flex-col overflow-hidden bg-background-light dark:bg-background-dark">
+            <!-- Top Navbar -->
+            <header class="h-16 flex-shrink-0 flex items-center justify-between px-8 bg-white dark:bg-[#121212] border-b border-slate-200 dark:border-border-dark">
+                <div class="flex items-center gap-2">
+                    <h2 class="text-lg font-bold">Developer Admin Panel</h2>
+                    <span class="px-2 py-0.5 text-[10px] bg-slate-100 dark:bg-white/10 rounded uppercase tracking-widest font-bold">v2.4</span>
+                </div>
+                <div class="flex items-center gap-6">
+                    <button class="relative p-2 text-slate-400 hover:text-primary transition-colors">
+                        <span class="material-symbols-outlined">notifications</span>
+                        <span class="absolute top-2 right-2 size-2 bg-primary rounded-full border-2 border-white dark:border-[#121212]"></span>
+                    </button>
+                    <div class="flex items-center gap-3 pl-6 border-l border-slate-200 dark:border-border-dark">
+                        <div class="text-right">
+                            <p class="text-xs font-bold">Alex Thorne</p>
+                            <p class="text-[10px] text-slate-500 uppercase tracking-tighter">Admin</p>
+                        </div>
+                        <div class="size-10 rounded-full bg-cover bg-center border border-slate-200 dark:border-border-dark" data-alt="Modern professional headshot of a developer" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAbafQj4KATL--bzVWVXtHOfMaUMO998Po3SYoyjzPbygTfTbQRl3R_VGa8_FhxlTvzD9WvwCn4XDBa1fPRdQaEXoDiT4i92omJaEnBlQ6b3AB6tknAk6H7EhemzLnBPNGhqlQc-A4XP5cCZZrGQ_lSOWS45xVwCXIn0GdkvhRuDTbgTAKt9Qj3vauVLIV7qAlYqCQ3VZyaS0tlZ9E11jSChAfK8PWbUfComtuwLXS0ijF1VHujy30dc9MyIM_J9JCPD6NohhFpjyc')"></div>
+                    </div>
+                </div>
+            </header>
+            <!-- Page Content Scroll Area -->
+            @RenderBody();
+        </main>
+    </div>
+</body>
+</html>
