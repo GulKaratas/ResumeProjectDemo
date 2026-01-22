@@ -1,0 +1,27 @@
+﻿@model List<ResumeProjectDemo.Entities.Portfolio>
+@{
+    ViewData["Title"] = "PortfolioList";
+    Layout = "~/Views/AdminLayout/Index.cshtml";
+}
+
+<h1>PortfolioList</h1>
+
+<table class="table table-bordred">
+    <tr>
+       <th>#</th>
+        <th>Başlık</th>
+        <th>Sil</th>
+        <th>Güncelle</th>
+    </tr>
+    @foreach(var item in Model)
+    {
+        <tr>
+            <td>@item.PortfolioId</td>
+            <td>@item.Title</td>
+            <td><a href="/Portfolio/DeletePortfolio/@item.PortfolioId" class="btn btn-danger"></a>Sil</td>
+            <td><a href="/Portfolio/UpdatePortfolio/@item.PortfolioId" class="btn btn-success"></a>Güncelle</td>
+        </tr>
+    }
+
+</table>
+<a href="/Portfolio/CreatePortfolio" class="btn btn-info">Yeni Proje Girişi</a>

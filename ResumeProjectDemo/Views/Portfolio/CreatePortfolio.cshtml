@@ -1,0 +1,284 @@
+﻿@model ResumeProjectDemo.Entities.Portfolio
+
+@{
+    ViewData["Title"] = "Portfolio Ekle";
+    Layout = "~/Views/AdminLayout/Index.cshtml";
+}
+
+<style>
+    :root {
+        --bg-card: #1a2332;
+        --bg-input: #243447;
+        --accent: #00d9ff;
+        --accent-purple: #7c3aed;
+        --text: #e8ecf2;
+        --text-muted: #94a3b8;
+        --success: #10b981;
+        --border: rgba(255,255,255,0.1);
+    }
+
+    .portfolio-container {
+        max-width: 800px;
+        margin: 0 auto;
+    }
+
+    .page-header {
+        margin-bottom: 2.5rem;
+    }
+
+    .page-title {
+        font-size: 2rem;
+        font-weight: 700;
+        background: linear-gradient(135deg, var(--accent), var(--accent-purple));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        margin-bottom: 0.5rem;
+    }
+
+    .page-subtitle {
+        color: var(--text-muted);
+        font-size: 0.95rem;
+    }
+
+    .form-card {
+        background: var(--bg-card);
+        border-radius: 20px;
+        padding: 2.5rem;
+        border: 1px solid var(--border);
+        box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+    }
+
+    .form-group {
+        margin-bottom: 2rem;
+    }
+
+    .form-label {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        color: var(--text);
+        font-weight: 600;
+        font-size: 0.95rem;
+        margin-bottom: 0.75rem;
+    }
+
+    .label-icon {
+        font-size: 1.2rem;
+    }
+
+    .required {
+        color: #ef4444;
+        margin-left: 0.25rem;
+    }
+
+    .form-input {
+        width: 100%;
+        padding: 1rem 1.25rem;
+        background: var(--bg-input);
+        border: 2px solid var(--border);
+        border-radius: 12px;
+        color: var(--text);
+        font-size: 1rem;
+        transition: all 0.3s ease;
+        font-family: inherit;
+    }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--accent);
+            background: rgba(0, 217, 255, 0.05);
+            box-shadow: 0 0 0 4px rgba(0, 217, 255, 0.1);
+        }
+
+        .form-input::placeholder {
+            color: var(--text-muted);
+            opacity: 0.6;
+        }
+
+    .input-hint {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        margin-top: 0.5rem;
+        color: var(--text-muted);
+        font-size: 0.813rem;
+    }
+
+    .char-counter {
+        margin-left: auto;
+        font-weight: 600;
+        color: var(--accent);
+    }
+
+    .form-actions {
+        display: flex;
+        gap: 1rem;
+        margin-top: 2.5rem;
+        padding-top: 2rem;
+        border-top: 1px solid var(--border);
+    }
+
+    .btn {
+        flex: 1;
+        padding: 1rem 2rem;
+        border-radius: 12px;
+        border: none;
+        font-weight: 600;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-family: inherit;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+    }
+
+    .btn-primary {
+        background: linear-gradient(135deg, var(--accent), var(--accent-purple));
+        color: white;
+        box-shadow: 0 4px 20px rgba(0, 217, 255, 0.3);
+    }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 30px rgba(0, 217, 255, 0.4);
+        }
+
+    .btn-secondary {
+        background: var(--bg-input);
+        color: var(--text);
+        border: 2px solid var(--border);
+    }
+
+        .btn-secondary:hover {
+            background: rgba(148, 163, 184, 0.1);
+            border-color: var(--text-muted);
+        }
+
+    .btn:active {
+        transform: translateY(0);
+    }
+
+    .info-box {
+        background: rgba(0, 217, 255, 0.05);
+        border: 1px solid rgba(0, 217, 255, 0.2);
+        border-radius: 12px;
+        padding: 1.25rem;
+        margin-bottom: 2rem;
+        display: flex;
+        gap: 1rem;
+        align-items: start;
+    }
+
+    .info-icon {
+        font-size: 1.5rem;
+        flex-shrink: 0;
+    }
+
+    .info-content {
+        flex: 1;
+    }
+
+    .info-title {
+        color: var(--accent);
+        font-weight: 600;
+        margin-bottom: 0.25rem;
+    }
+
+    .info-text {
+        color: var(--text-muted);
+        font-size: 0.875rem;
+        line-height: 1.5;
+    }
+
+    @@media (max-width: 768px) {
+        .form-card {
+            padding: 1.5rem;
+        }
+
+        .form-actions {
+            flex-direction: column;
+        }
+
+        .page-title {
+            font-size: 1.5rem;
+        }
+    }
+</style>
+
+<div class="portfolio-container">
+    <div class="page-header">
+        <h1 class="page-title">🎨 Yeni Portfolio Ekle</h1>
+        <p class="page-subtitle">Portfolio koleksiyonunuza yeni bir proje ekleyin</p>
+    </div>
+
+    <div class="info-box">
+        <div class="info-icon">💡</div>
+        <div class="info-content">
+            <div class="info-title">İpucu</div>
+            <div class="info-text">
+                Portfolio başlığınız açıklayıcı ve profesyonel olmalıdır.
+                Projenizin türünü ve kapsamını yansıtacak şekilde isimlendirin.
+            </div>
+        </div>
+    </div>
+
+    <div class="form-card">
+        <form asp-action="CreatePortfolio" method="post">
+            <div class="form-group">
+                <label class="form-label">
+                    <span class="label-icon">📝</span>
+                    Portfolio Başlığı
+                    <span class="required">*</span>
+                </label>
+                <input type="text"
+                       asp-for="Title"
+                       class="form-input"
+                       placeholder="Örn: E-Ticaret Web Sitesi Tasarımı"
+                       maxlength="100"
+                       required
+                       oninput="updateCharCount(this)" />
+                <div class="input-hint">
+                    <span>💼 Projenizi en iyi tanımlayan başlığı girin</span>
+                    <span class="char-counter" id="charCounter">0/100</span>
+                </div>
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+
+            <div class="form-actions">
+                <button type="button" class="btn btn-secondary" onclick="window.location.href='@Url.Action("Index", "Portfolio")'">
+                    ❌ İptal
+                </button>
+                <button type="submit" class="btn btn-primary">
+                    ✅ Kaydet
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    function updateCharCount(input) {
+        const counter = document.getElementById('charCounter');
+        const length = input.value.length;
+        counter.textContent = length + '/100';
+
+        if (length > 80) {
+            counter.style.color = '#ef4444';
+        } else if (length > 50) {
+            counter.style.color = '#f59e0b';
+        } else {
+            counter.style.color = 'var(--accent)';
+        }
+    }
+
+    // Sayfa yüklendiğinde karakter sayacını güncelle
+    document.addEventListener('DOMContentLoaded', function() {
+        const input = document.querySelector('input[asp-for="Title"]');
+        if (input && input.value) {
+            updateCharCount(input);
+        }
+    });
+</script>
+

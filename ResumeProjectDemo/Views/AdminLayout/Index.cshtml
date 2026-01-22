@@ -135,7 +135,9 @@
                 </div>
             </header>
             <!-- Page Content Scroll Area -->
-            @RenderBody();
+            <div class="flex-1 overflow-y-auto custom-scrollbar">
+                @RenderBody()
+            </div>
         </main>
     </div>
 </body>
