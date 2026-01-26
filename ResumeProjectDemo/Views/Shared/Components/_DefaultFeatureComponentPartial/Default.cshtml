@@ -1,22 +1,129 @@
-﻿<div id="page-cover" class="page-cover">
+﻿@model List<ResumeProjectDemo.Entities.Feature>
+
+
+
+<div id="page-cover" class="page-cover">
 	<div class="page-cover-wrapper-fixed">
-		<div class="page-cover-bg">
-			<div class="overlay-inner bg-dark opacity-55"></div>
+		<div class="page-cover-bg" id="featureBg" style="background-image: url('@Model.First().BackgroundImage'); background-size: cover; background-position: center; transition: background-image 1s ease-in-out;">
+			<div class="overlay-inner bg-dark opacity-15"></div>
 		</div>
 		<div class="page-cover-wrap">
-
 			<section id="home" class="d-flex min-vh-100">
 				<div class="container align-self-center text-white text-center">
 					<div class="avatar avatar-xxl mb-6">
 						<div class="avatar-shape avatar-shape-rounded bg-white mt-n2 mb-n2 mr-n2"></div>
-						<img src="demo/images/avatar_small.jpg" alt="" class="avatar-img rounded-circle shadow-light">
+						<img src="@Model.First().AvatarImage" alt="" id="featureAvatar" class="avatar-img rounded-circle shadow-light" style="transition: opacity 0.5s;">
 					</div>
-					<h1 class="mb-2 mb-lg-3">Amanda Malat</h1>
-					<p class="lead mb-0">UI/UX Designer</p>
-					<span class="cover-letter letter-xl text-white opacity-10">A</span>
+					
+
+					<h1 class="mb-2 mb-lg-3" id="featureName">@Model.First().NameSurname</h1>
+					<p class="lead mb-0" id="featureTitle">@Model.First().Title</p>
+					<div class="social-icons mt-4 mb-4" id="featureSocial">
+
+						<a href="#" id="LinkedInUrl" target="_blank" class="social-icon">
+							<i class="fab fa-linkedin"></i>
+						</a>
+
+						<a href="#" id="GithubUrl" target="_blank" class="social-icon">
+							<i class="fab fa-github"></i>
+						</a>
+					</div>
+					<span class="cover-letter letter-xl text-white opacity-10">G</span>
 				</div>
 			</section>
-
 		</div>
 	</div>
-</div><!--end .page-cover -->
+</div>
+
+<script>
+	(function () {
+		var slides = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(
+			Model.Select(x => new {
+				bg = x.BackgroundImage,
+				avatar = x.AvatarImage,
+				linkedin = x.LinkedInUrl,
+				github = x.GithubUrl
+			})
+		));
+
+		if (!slides || slides.length === 0) return;
+
+		var bgEl = document.getElementById('featureBg');
+		var avatarEl = document.getElementById('featureAvatar');
+		var linkedinEl = document.getElementById('LinkedInUrl');
+		var githubEl = document.getElementById('GithubUrl');
+
+		function normalizeUrl(url) {
+			if (!url) return '#';
+			if (url.startsWith('http://') || url.startsWith('https://')) {
+				return url;
+			}
+			return 'https://' + url;
+		}
+
+		var currentIndex = 0;
+
+		linkedinEl.href = normalizeUrl(slides[0].linkedin);
+		githubEl.href = normalizeUrl(slides[0].github);
+
+		
+		if (slides.length > 1) {
+			setInterval(function () {
+				currentIndex = (currentIndex + 1) % slides.length;
+				var slide = slides[currentIndex];
+
+				avatarEl.style.opacity = '0';
+
+				setTimeout(function () {
+					bgEl.style.backgroundImage = "url('" + slide.bg + "')";
+					avatarEl.src = slide.avatar;
+					avatarEl.style.opacity = '1';
+
+					linkedinEl.href = normalizeUrl(slide.linkedin);
+					githubEl.href = normalizeUrl(slide.github);
+				}, 500);
+			}, 5000);
+		}
+	})();
+</script>
+
+
+<style>
+	.social-icons {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		gap: 20px;
+	}
+
+	.social-icon {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		width: 45px;
+		height: 45px;
+		border-radius: 50%;
+		background: rgba(255, 255, 255, 0.1);
+		color: #fff;
+		font-size: 20px;
+		transition: all 0.3s ease;
+		text-decoration: none;
+		backdrop-filter: blur(10px);
+		border: 1px solid rgba(255, 255, 255, 0.2);
+	}
+
+	.social-icon:hover {
+		background: rgba(255, 255, 255, 0.25);
+		transform: translateY(-3px);
+		box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+		color: #fff;
+	}
+
+	.social-icon i {
+		transition: transform 0.3s ease;
+	}
+
+	.social-icon:hover i {
+		transform: scale(1.1);
+	}
+</style>

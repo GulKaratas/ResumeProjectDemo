@@ -1,69 +1,43 @@
-﻿<section>
+﻿@model List<ResumeProjectDemo.Entities.Testimonial>
+
+<section>
 	<div class="overlay">
-		<div class="overlay-inner bg-image-holder bg-cover bg-center">
-			<img src="demo/images/image-5.jpg" alt="background">
-		</div>
-		<div class="overlay-inner bg-dark opacity-70"></div>
-	</div>
-	<div class="container">
-		<div class="row">
-			<div class="col-lg-11 col-xl-10 mx-lg-auto text-center text-white">
-				<div class="slider dots-light dots-outside" data-slick='{"dots":true,"arrows":false}'>
-					<div>
-						<div class="icon icon-5x mb-8">
-							<i class="fa fa-quote-right"></i>
-						</div>
-						<blockquote>
-							<p class="mb-5">Nulla consequat nulla vitae enim venenatis, vel vulputate mi commodo. Pellentesque consequat at justo quis vulputate. Maecenas elementum metus eu maximus auctor. Morbi ultrices quam rhoncus purus bibendum ornare. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. </p>
-							<footer class="d-flex justify-content-center align-items-center w-lg-50 mx-auto text-left">
-								<div class="avatar">
-									<img src="demo/images/avatar_small.jpg" alt="" class="avatar-img rounded-circle shadow-dark">
-								</div>
-								<div class="ml-5">
-									<h4 class="h6 mb-0">Gül Karataş</h4>
-									<small class="d-block">Director Business Planning, Amazon</small>
-								</div>
-							</footer>
-						</blockquote>
-					</div>
+		
 
-					<div>
-						<div class="icon icon-5x mb-8">
-							<i class="fa fa-quote-right"></i>
-						</div>
-						<blockquote>
-							<p class="mb-5">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-							<footer class="d-flex justify-content-center align-items-center w-lg-50 mx-auto text-left">
-								<div class="avatar">
-									<img src="demo/images/avatar_small.jpg" alt="" class="avatar-img rounded-circle shadow-dark">
-								</div>
-								<div class="ml-5">
-									<h4 class="h6 mb-0">Jessica Nelson</h4>
-									<small class="d-block">Director Business Planning, Amazon</small>
-								</div>
-							</footer>
-						</blockquote>
-					</div>
+			<div class="overlay-inner bg-image-holder bg-cover bg-center">
+				<img src="/Background/1.jpg" alt="background">
+			</div>
+			<div class="overlay-inner bg-dark opacity-30"></div>
+			</div>
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-11 col-xl-10 mx-lg-auto text-center text-white">
+						<div class="slider dots-light dots-outside" data-slick='{"dots":true,"arrows":false}'>
+					@foreach (var testimonial in Model)
+					{
 
-					<div>
-						<div class="icon icon-5x mb-8">
-							<i class="fa fa-quote-right"></i>
+
+						<div>
+							<div class="icon icon-5x mb-8">
+								<i class="fa fa-quote-right"></i>
+							</div>
+							<blockquote>
+								<p class="mb-5"> @testimonial.CommentDetail </p>
+								<footer class="d-flex justify-content-center align-items-center w-lg-100 mx-auto text-left">
+									<div class="avatar">
+										<img src="@testimonial.ImageUrl" alt="" class="avatar-img rounded-circle shadow-dark">
+									</div>
+									<div class="ml-5">
+										<h4 class="h6 mb-0">@testimonial.NameSurname</h4>
+										<small class="d-block">@testimonial.TitleAndCompany</small>
+									</div>
+								</footer>
+							</blockquote>
 						</div>
-						<blockquote>
-							<p class="mb-5">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-							<footer class="d-flex justify-content-center align-items-center w-lg-50 mx-auto text-left">
-								<div class="avatar">
-									<img src="demo/images/avatar_small.jpg" alt="" class="avatar-img rounded-circle shadow-dark">
-								</div>
-								<div class="ml-5">
-									<h4 class="h6 mb-0">Gül Karataş</h4>
-									<small class="d-block">Director Business Planning, Amazon</small>
-								</div>
-							</footer>
-						</blockquote>
+					}
+				</div>
 					</div>
 				</div>
 			</div>
-		</div>
-	</div>
+		
 </section>

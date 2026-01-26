@@ -17,5 +17,7 @@ namespace ResumeProjectDemo.Context
         public DbSet<Portfolio> Portfolios { get; set; }
         public DbSet<Service> Services { get; set; }
         public DbSet<Testimonial> Testimonials { get; set; }
+        public DbSet<Feature> Features { get; set; }
+        public DbSet<Skils> Skilss { get; set; }
     }
 }
