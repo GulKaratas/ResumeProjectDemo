@@ -8,7 +8,7 @@
 							<h2 class="mb-0">Bana Yazın</h2>
 							<span class="title-letter">C</span>
 						</div>
-						<p>Want to say hello? Want to know more about me? Give me a call or drop me an email and I will get back to you as soon as I can.</p>
+						<p>Bir sorununuz olduğunda bana yazın.</p>
 					</div>
 				</div>
 				<div class="row mb-8">
@@ -20,8 +20,9 @@
 								</div>
 							</div>
 							<p class="text-center">
-								(0091) 1111 1234567<br />
-								(084) 2222 1234567
+
+								0546 456 45 23
+								<br />
 							</p>
 						</div>
 					</div>
@@ -34,8 +35,9 @@
 								</div>
 							</div>
 							<p class="text-center">
-								69 Halsey St, New York, Ny 10002,<br />
-								United States
+								2719 Embassy Dr, West Palm Beach, FL 33401
+								<br />
+								 Amerika Birleşik Devletleri 777
 							</p>
 						</div>
 					</div>
@@ -48,53 +50,101 @@
 								</div>
 							</div>
 							<p class="text-center">
-								<a href="mailto:support@example.com" class="text-dark">support@example.com</a><br />
-								<a href="mailto:hello@example.com" class="text-dark">hello@example.com</a>
+								<a href="mailto:glserenkarts@gmail.com" class="text-dark">glserenkarts@gmail.com</a><br />
 							</p>
 						</div>
 					</div>
 				</div>
 				<div class="contact-form">
-					<form class="mb-0" id="cf" name="cf" action="include/sendemail.php" method="post" autocomplete="off">
+					<form class="mb-0" id="contactForm" autocomplete="off">
 						<div class="form-row">
 							<div class="form-process"></div>
 
 							<div class="col-12 col-md-6">
 								<div class="form-group error-text-white">
-									<input type="text" id="cf-name" name="cf-name" placeholder="Enter your name" class="form-control required">
+									<input type="text" name="NameSurname" placeholder="İsminiz" class="form-control required">
 								</div>
 							</div>
 
 							<div class="col-12 col-md-6">
 								<div class="form-group error-text-white">
-									<input type="email" id="cf-email" name="cf-email" placeholder="Enter your email address" class="form-control required">
+									<input type="email" name="EmailAddress" placeholder="E-posta" class="form-control required">
 								</div>
 							</div>
 
 							<div class="col-12">
 								<div class="form-group error-text-white">
-									<input type="text" id="cf-subject" name="cf-subject" placeholder="Subject (Optional)" class="form-control">
+									<input type="text" name="Subject" placeholder="Konu" class="form-control">
 								</div>
 							</div>
 
 							<div class="col-12 mb-4">
 								<div class="form-group error-text-white">
-									<textarea name="cf-message" id="cf-message" placeholder="Here goes your message" class="form-control required" rows="7"></textarea>
+									<textarea name="MessageDetail" placeholder="Mesajınız" class="form-control required" rows="7"></textarea>
 								</div>
 							</div>
 
 							<div class="col-12 d-none">
-								<input type="text" id="cf-botcheck" name="cf-botcheck" value="" class="form-control" />
+								<input type="text" name="cf-botcheck" value="" class="form-control" />
 							</div>
 
 							<div class="col-12 text-center">
-								<button class="btn btn-primary" type="submit" id="cf-submit" name="cf-submit">Send Message</button>
+								<button class="btn btn-primary" type="submit" id="sendBtn">Mesaj Gönder</button>
 							</div>
 						</div>
 					</form>
-					<div class="contact-form-result text-center"></div>
+					<div class="contact-form-result text-center" id="formResult"></div>
 				</div>
 			</div>
 		</div>
 	</div>
 </section>
+
+<script>
+	document.getElementById('contactForm').addEventListener('submit', function(e) {
+		e.preventDefault();
+
+		const formData = {
+			NameSurname: document.querySelector('[name="NameSurname"]').value,
+			EmailAddress: document.querySelector('[name="EmailAddress"]').value,
+			Subject: document.querySelector('[name="Subject"]').value,
+			MessageDetail: document.querySelector('[name="MessageDetail"]').value
+		};
+
+		const btn = document.getElementById('sendBtn');
+		const resultDiv = document.getElementById('formResult');
+
+		btn.disabled = true;
+		btn.textContent = 'Gönderiliyor...';
+
+		fetch('/Default/SendMessage', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify(formData)
+		})
+		.then(res => res.json())
+		.then(data => {
+			if (data.success) {
+				resultDiv.innerHTML = '<div class="alert alert-success mt-3">' + data.message + '</div>';
+				document.getElementById('contactForm').reset();
+			} else {
+				resultDiv.innerHTML = '<div class="alert alert-danger mt-3">' + data.message + '</div>';
+			}
+		})
+		.catch(error => {
+			console.error('Hata:', error);
+			resultDiv.innerHTML = '<div class="alert alert-danger mt-3">Bir hata oluştu!</div>';
+		})
+		.finally(() => {
+			btn.disabled = false;
+			btn.textContent = 'Mesaj Gönder';
+
+			// 5 saniye sonra mesajı kaldır
+			setTimeout(() => {
+				resultDiv.innerHTML = '';
+			}, 5000);
+		});
+	});
+</script>
