@@ -1,0 +1,447 @@
+﻿@model List<ResumeProjectDemo.Entities.Skils>
+@{
+    ViewData["Title"] = "SkillsList";
+    ViewData["ActivePage"] = "Skills";
+    Layout = "~/Views/AdminLayout/Index.cshtml";
+}
+
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-white min-h-screen">
+    <main class="max-w-[1400px] mx-auto px-4 py-8">
+        
+        <!-- Success/Error Messages -->
+        @if (TempData["Success"] != null)
+        {
+            <div id="successAlert" class="glass-card mb-6 p-4 rounded-xl bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-700 flex items-center gap-3 animate-slideDown">
+                <span class="material-symbols-outlined text-green-600 dark:text-green-400 text-2xl">check_circle</span>
+                <p class="text-green-800 dark:text-green-300 font-medium">@TempData["Success"]</p>
+            </div>
+        }
+
+        @if (TempData["Error"] != null)
+        {
+            <div id="errorAlert" class="glass-card mb-6 p-4 rounded-xl bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-700 flex items-center gap-3 animate-slideDown">
+                <span class="material-symbols-outlined text-red-600 dark:text-red-400 text-2xl">error</span>
+                <p class="text-red-800 dark:text-red-300 font-medium">@TempData["Error"]</p>
+            </div>
+        }
+
+        <!-- Page Header -->
+        <div class="flex flex-wrap justify-between items-end gap-4 mb-8">
+            <div class="flex flex-col gap-2">
+                <p class="text-slate-900 dark:text-white text-4xl font-black leading-tight tracking-[-0.033em]">
+                    Yeteneklerim
+                </p>
+                <p class="text-slate-500 dark:text-[#92c0c9] text-base font-normal leading-normal">
+                    Teknik becerilerinizi ve yüzdelerini buradan yönetin
+                </p>
+            </div>
+            <div class="flex gap-3">
+                <button onclick="openAddModal()" 
+                        class="flex min-w-[120px] cursor-pointer items-center justify-center gap-2 rounded-xl h-12 px-6 bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary text-white text-sm font-bold leading-normal transition-all duration-300 shadow-lg shadow-primary/30 hover:shadow-xl hover:shadow-primary/40 hover:-translate-y-0.5">
+                    <span class="material-symbols-outlined text-[20px]">add_circle</span>
+                    <span class="truncate">Yeni Yetenek Ekle</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Skills Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            
+            @if (Model != null && Model.Any())
+            {
+                @foreach (var skill in Model)
+                {
+                    <div class="glass-card rounded-xl p-6 hover:shadow-2xl transition-all duration-300 group">
+                        <!-- Skill Header -->
+                        <div class="flex justify-between items-start mb-4">
+                            <div class="flex-1">
+                                <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-1 group-hover:text-primary transition-colors">
+                                    @skill.Title
+                                </h3>
+                                @if (!string.IsNullOrEmpty(skill.Category))
+                                {
+                                    <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-medium bg-primary/10 text-primary mt-2">
+                                        <span class="material-symbols-outlined text-[14px]">folder</span>
+                                        @skill.Category
+                                    </span>
+                                }
+                            </div>
+                            <div class="flex gap-2">
+                                <button onclick="openEditModal(@skill.SkilsId, '@skill.Title', @skill.Percentage, '@(skill.Description ?? "")', '@(skill.Category ?? "")')" 
+                                        class="size-9 flex items-center justify-center rounded-lg bg-blue-500/10 hover:bg-blue-500 text-blue-600 hover:text-white transition-all duration-300 group/btn">
+                                    <span class="material-symbols-outlined text-[20px]">edit</span>
+                                </button>
+                                <button onclick="confirmDelete(@skill.SkilsId, '@skill.Title')"
+                                        class="size-9 flex items-center justify-center rounded-lg bg-red-500/10 hover:bg-red-500 text-red-600 hover:text-white transition-all duration-300 group/btn">
+                                    <span class="material-symbols-outlined text-[20px]">delete</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Description -->
+                        @if (!string.IsNullOrEmpty(skill.Description))
+                        {
+                            <p class="text-sm text-slate-600 dark:text-slate-400 mb-4">
+                                @skill.Description
+                            </p>
+                        }
+
+                        <!-- Percentage Display -->
+                        <div class="mb-3">
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="text-sm font-medium text-slate-600 dark:text-slate-300">Yetenek Seviyesi</span>
+                                <span class="text-2xl font-black text-primary">@skill.Percentage%</span>
+                            </div>
+                            
+                            <!-- Progress Bar -->
+                            <div class="w-full h-3 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden">
+                                <div class="h-full bg-gradient-to-r from-primary to-primary/70 rounded-full transition-all duration-1000 ease-out"
+                                     style="width: @skill.Percentage%">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Skill ID Badge -->
+                        <div class="mt-4 pt-4 border-t border-slate-200 dark:border-slate-700">
+                            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400">
+                                <span class="material-symbols-outlined text-[14px]">tag</span>
+                                ID: @skill.SkilsId
+                            </span>
+                        </div>
+                    </div>
+                }
+            }
+            else
+            {
+                <!-- Empty State -->
+                <div class="col-span-full flex flex-col items-center justify-center py-16">
+                    <div class="w-24 h-24 rounded-full bg-primary/10 flex items-center justify-center mb-6">
+                        <span class="material-symbols-outlined text-6xl text-primary">psychology</span>
+                    </div>
+                    <h3 class="text-2xl font-bold text-slate-900 dark:text-white mb-2">
+                        Henüz yetenek eklenmemiş
+                    </h3>
+                    <p class="text-slate-500 dark:text-slate-400 mb-6">
+                        İlk yeteneğinizi ekleyerek başlayın
+                    </p>
+                    <button onclick="openAddModal()" 
+                            class="flex items-center gap-2 px-6 py-3 rounded-xl bg-primary hover:bg-primary/90 text-white font-bold transition-all">
+                        <span class="material-symbols-outlined">add</span>
+                        Yetenek Ekle
+                    </button>
+                </div>
+            }
+
+        </div>
+
+    </main>
+
+    <!-- Add/Edit Modal -->
+    <div id="skillModal" class="hidden fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 animate-fadeIn">
+        <div class="glass-card rounded-2xl p-8 max-w-md w-full shadow-2xl animate-scaleIn">
+            <!-- Modal Header -->
+            <div class="flex justify-between items-center mb-6">
+                <h2 id="modalTitle" class="text-2xl font-black text-slate-900 dark:text-white">
+                    Yeni Yetenek Ekle
+                </h2>
+                <button onclick="closeModal()" 
+                        class="size-10 flex items-center justify-center rounded-lg hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors">
+                    <span class="material-symbols-outlined text-slate-600 dark:text-slate-400">close</span>
+                </button>
+            </div>
+
+            <!-- Modal Form -->
+            <form id="skillForm" method="post">
+                <input type="hidden" id="skillId" name="skilsId" value="" />
+
+                <!-- Skill Name -->
+                <div class="mb-4">
+                    <label class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2 px-1">
+                        <span class="material-symbols-outlined text-[18px] align-middle mr-1">label</span>
+                        Yetenek Adı <span class="text-red-500">*</span>
+                    </label>
+                    <input type="text" 
+                           id="skillTitle" 
+                           name="title" 
+                           required
+                           placeholder="Örn: C#, JavaScript, React..."
+                           class="w-full rounded-lg bg-white dark:bg-surface-dark border-2 border-slate-300 dark:border-[#234248] px-4 py-3 text-slate-900 dark:text-white placeholder:text-slate-400 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all" />
+                </div>
+
+                <!-- Category -->
+                <div class="mb-4">
+                    <label class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2 px-1">
+                        <span class="material-symbols-outlined text-[18px] align-middle mr-1">folder</span>
+                        Kategori
+                    </label>
+                    <input type="text" 
+                           id="skillCategory" 
+                           name="category" 
+                           placeholder="Örn: Backend, Frontend, Database..."
+                           class="w-full rounded-lg bg-white dark:bg-surface-dark border-2 border-slate-300 dark:border-[#234248] px-4 py-3 text-slate-900 dark:text-white placeholder:text-slate-400 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all" />
+                </div>
+
+                <!-- Description -->
+                <div class="mb-4">
+                    <label class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2 px-1">
+                        <span class="material-symbols-outlined text-[18px] align-middle mr-1">description</span>
+                        Açıklama
+                    </label>
+                    <textarea id="skillDescription" 
+                              name="description" 
+                              rows="3"
+                              placeholder="Yetenek hakkında kısa açıklama..."
+                              class="w-full rounded-lg bg-white dark:bg-surface-dark border-2 border-slate-300 dark:border-[#234248] px-4 py-3 text-slate-900 dark:text-white placeholder:text-slate-400 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all resize-none"></textarea>
+                </div>
+
+                <!-- Skill Percentage -->
+                <div class="mb-6">
+                    <label class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2 px-1">
+                        <span class="material-symbols-outlined text-[18px] align-middle mr-1">percent</span>
+                        Yetenek Seviyesi (%) <span class="text-red-500">*</span>
+                    </label>
+                    <div class="relative">
+                        <input type="range" 
+                               id="skillPercentage" 
+                               name="percentage" 
+                               min="0" 
+                               max="100" 
+                               value="50"
+                               oninput="updatePercentageDisplay(this.value)"
+                               class="w-full h-3 bg-slate-200 dark:bg-slate-700 rounded-full appearance-none cursor-pointer accent-primary" />
+                        <div class="flex justify-between mt-2">
+                            <span class="text-xs font-medium text-slate-500">0%</span>
+                            <span id="percentageDisplay" class="text-2xl font-black text-primary">50%</span>
+                            <span class="text-xs font-medium text-slate-500">100%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Modal Buttons -->
+                <div class="flex gap-3 pt-4 border-t border-slate-200 dark:border-slate-700">
+                    <button type="button" 
+                            onclick="closeModal()"
+                            class="flex-1 h-11 rounded-xl border-2 border-slate-300 dark:border-slate-600 text-slate-700 dark:text-slate-300 font-bold hover:bg-slate-100 dark:hover:bg-slate-800 transition-all">
+                        İptal
+                    </button>
+                    <button type="submit" 
+                            id="submitBtn"
+                            class="flex-1 h-11 rounded-xl bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary text-white font-bold shadow-lg shadow-primary/30 hover:shadow-xl hover:shadow-primary/40 transition-all hover:-translate-y-0.5">
+                        Kaydet
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Delete Confirmation Modal -->
+    <div id="deleteModal" class="hidden fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 animate-fadeIn">
+        <div class="glass-card rounded-2xl p-8 max-w-md w-full shadow-2xl animate-scaleIn">
+            <!-- Warning Icon -->
+            <div class="w-16 h-16 rounded-full bg-red-100 dark:bg-red-900/30 flex items-center justify-center mx-auto mb-4">
+                <span class="material-symbols-outlined text-4xl text-red-600 dark:text-red-400">warning</span>
+            </div>
+
+            <h2 class="text-2xl font-black text-slate-900 dark:text-white text-center mb-2">
+                Yeteneği Sil
+            </h2>
+            <p class="text-slate-600 dark:text-slate-400 text-center mb-6">
+                <span id="deleteSkillName" class="font-bold text-primary"></span> yeteneğini silmek istediğinize emin misiniz?
+                Bu işlem geri alınamaz.
+            </p>
+
+            <form id="deleteForm" method="post">
+                <input type="hidden" id="deleteSkillId" name="skilsId" value="" />
+                
+                <div class="flex gap-3">
+                    <button type="button" 
+                            onclick="closeDeleteModal()"
+                            class="flex-1 h-11 rounded-xl border-2 border-slate-300 dark:border-slate-600 text-slate-700 dark:text-slate-300 font-bold hover:bg-slate-100 dark:hover:bg-slate-800 transition-all">
+                        İptal
+                    </button>
+                    <button type="submit" 
+                            class="flex-1 h-11 rounded-xl bg-gradient-to-r from-red-600 to-red-500 hover:from-red-700 hover:to-red-600 text-white font-bold shadow-lg shadow-red-500/30 hover:shadow-xl hover:shadow-red-500/40 transition-all hover:-translate-y-0.5">
+                        Sil
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</body>
+
+<style>
+    /* Animations */
+    @@keyframes slideDown {
+        from {
+            opacity: 0;
+            transform: translateY(-20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @@keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+
+    @@keyframes scaleIn {
+        from {
+            opacity: 0;
+            transform: scale(0.9);
+        }
+        to {
+            opacity: 1;
+            transform: scale(1);
+        }
+    }
+
+    .animate-slideDown {
+        animation: slideDown 0.3s ease-out;
+    }
+
+    .animate-fadeIn {
+        animation: fadeIn 0.2s ease-out;
+    }
+
+    .animate-scaleIn {
+        animation: scaleIn 0.3s ease-out;
+    }
+
+    /* Custom Range Slider */
+    input[type="range"]::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        appearance: none;
+        width: 24px;
+        height: 24px;
+        background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+        cursor: pointer;
+        border-radius: 50%;
+        border: 3px solid white;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+        transition: all 0.2s;
+    }
+
+    input[type="range"]::-webkit-slider-thumb:hover {
+        transform: scale(1.2);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    }
+
+    input[type="range"]::-moz-range-thumb {
+        width: 24px;
+        height: 24px;
+        background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+        cursor: pointer;
+        border-radius: 50%;
+        border: 3px solid white;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+        transition: all 0.2s;
+    }
+
+    input[type="range"]::-moz-range-thumb:hover {
+        transform: scale(1.2);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Glass Card Effect */
+    .glass-card {
+        background: rgba(255, 255, 255, 0.9);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .dark .glass-card {
+        background: rgba(30, 41, 59, 0.7);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+</style>
+
+<script>
+    // Auto-hide success/error messages
+    setTimeout(function () {
+        const successAlert = document.getElementById('successAlert');
+        const errorAlert = document.getElementById('errorAlert');
+        if (successAlert) {
+            successAlert.style.transition = 'opacity 0.3s ease-out, transform 0.3s ease-out';
+            successAlert.style.opacity = '0';
+            successAlert.style.transform = 'translateY(-20px)';
+            setTimeout(() => successAlert.remove(), 300);
+        }
+        if (errorAlert) {
+            errorAlert.style.transition = 'opacity 0.3s ease-out, transform 0.3s ease-out';
+            errorAlert.style.opacity = '0';
+            errorAlert.style.transform = 'translateY(-20px)';
+            setTimeout(() => errorAlert.remove(), 300);
+        }
+    }, 3000);
+
+    // Modal Functions
+    function openAddModal() {
+        document.getElementById('modalTitle').textContent = 'Yeni Yetenek Ekle';
+        document.getElementById('skillForm').action = '/Skills/CreateSkills';
+        document.getElementById('skillId').value = '';
+        document.getElementById('skillTitle').value = '';
+        document.getElementById('skillCategory').value = '';
+        document.getElementById('skillDescription').value = '';
+        document.getElementById('skillPercentage').value = '50';
+        updatePercentageDisplay(50);
+        document.getElementById('skillModal').classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function openEditModal(id, title, percentage, description, category) {
+        document.getElementById('modalTitle').textContent = 'Yeteneği Düzenle';
+        document.getElementById('skillForm').action = '/Skills/UpdateSkills';
+        document.getElementById('skillId').value = id;
+        document.getElementById('skillTitle').value = title;
+        document.getElementById('skillCategory').value = category || '';
+        document.getElementById('skillDescription').value = description || '';
+        document.getElementById('skillPercentage').value = percentage;
+        updatePercentageDisplay(percentage);
+        document.getElementById('skillModal').classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+        document.getElementById('skillModal').classList.add('hidden');
+        document.body.style.overflow = 'auto';
+    }
+
+    function updatePercentageDisplay(value) {
+        document.getElementById('percentageDisplay').textContent = value + '%';
+    }
+
+    // Delete Modal Functions
+    function confirmDelete(id, name) {
+        document.getElementById('deleteSkillName').textContent = name;
+        document.getElementById('deleteSkillId').value = id;
+        document.getElementById('deleteForm').action = '/Skills/DeleteSkills';
+        document.getElementById('deleteModal').classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeDeleteModal() {
+        document.getElementById('deleteModal').classList.add('hidden');
+        document.body.style.overflow = 'auto';
+    }
+
+    // Close modals on ESC key
+    document.addEventListener('keydown', function(event) {
+        if (event.key === 'Escape') {
+            closeModal();
+            closeDeleteModal();
+        }
+    });
+
+    //Close modals on outside click
+    document.getElementById('skillModal')?.addEventListener('click', function(e) {
+        if (e.target === this) closeModal();
+    });
+
+    document.getElementById('deleteModal')?.addEventListener('click', function(e) {
+        if (e.target === this) closeDeleteModal();
+    });
+</script>

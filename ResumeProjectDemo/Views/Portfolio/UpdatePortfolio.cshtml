@@ -1,6 +1,6 @@
 ﻿@model ResumeProjectDemo.Entities.Portfolio
 @{
-    ViewData["Title"] = "CreatePortfolio";
+    ViewData["Title"] = "UpdatePortfolio";
     ViewData["ActivePage"] = "Portfolio";
     Layout = "~/Views/AdminLayout/Index.cshtml";
 }
@@ -38,17 +38,19 @@
         <div class="flex flex-wrap justify-between items-end gap-4 mb-8">
             <div class="flex flex-col gap-2">
                 <p class="text-slate-900 dark:text-white text-4xl font-black leading-tight tracking-[-0.033em]">
-                    Yeni Proje Ekle
+                    Proje Güncelle
                 </p>
                 <p class="text-slate-500 dark:text-[#92c0c9] text-base font-normal leading-normal">
-                    Portfolio'nuza yeni bir proje ekleyin
+                    Mevcut proje bilgilerini ve görselini güncelleyin
                 </p>
             </div>
         </div>
 
         <!-- Form Card -->
-        <form asp-controller="Portfolio" asp-action="CreatePortfolio" method="post" enctype="multipart/form-data">
+        <form asp-controller="Portfolio" asp-action="UpdatePortfolio" method="post" enctype="multipart/form-data">
             <div class="glass-card rounded-xl p-6 md:p-8 shadow-2xl">
+                
+                <input type="hidden" asp-for="PortfolioId" />
 
                 <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
                     
@@ -61,15 +63,17 @@
                             </label>
                             
                             <div class="relative group">
-                                <div class="aspect-[4/3] bg-slate-200 dark:bg-slate-800 rounded-xl overflow-hidden border-2 border-dashed border-slate-300 dark:border-slate-700 flex items-center justify-center">
+                                <div class="aspect-[4/3] bg-slate-200 dark:bg-slate-800 rounded-xl overflow-hidden border-2 border-slate-300 dark:border-slate-700">
                                     <img id="imagePreview" 
-                                         src="https://via.placeholder.com/1200x800?text=Proje+Görseli" 
-                                         alt="Preview"
-                                         class="w-full h-full object-cover hidden" />
-                                    <div id="placeholderText" class="text-center p-6">
-                                        <span class="material-symbols-outlined text-6xl text-slate-400 dark:text-slate-600 mb-3 block">add_photo_alternate</span>
-                                        <p class="text-slate-600 dark:text-slate-400 font-semibold mb-1">Görsel Ekle</p>
-                                        <p class="text-xs text-slate-500 dark:text-slate-500">Dosya yükle veya URL gir</p>
+                                         src="@Model.ImageUrl" 
+                                         alt="@Model.Title"
+                                         class="w-full h-full object-cover" />
+                                </div>
+                                
+                                <div class="absolute inset-0 bg-black/60 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                                    <div class="text-center">
+                                        <span class="material-symbols-outlined text-white text-5xl mb-2 block">photo_camera</span>
+                                        <p class="text-white text-sm font-semibold">Görseli Değiştir</p>
                                     </div>
                                 </div>
                             </div>
@@ -86,7 +90,7 @@
                                     onclick="document.getElementById('imageFileInput').click()"
                                     class="w-full flex items-center justify-center gap-2 rounded-xl h-12 px-4 bg-gradient-to-r from-primary/10 to-primary/5 hover:from-primary hover:to-primary/80 text-primary hover:text-white border border-primary/30 font-bold transition-all duration-300 hover:shadow-lg hover:shadow-primary/30">
                                 <span class="material-symbols-outlined text-[20px]">upload</span>
-                                Dosyadan Yükle
+                                Yeni Görsel Yükle
                             </button>
 
                             <input type="file"
@@ -161,7 +165,7 @@
                                     <ul class="list-disc list-inside space-y-1 text-xs">
                                         <li>Bilgisayarınızdan dosya yükleyebilirsiniz</li>
                                         <li>Ya da direkt URL adresi girebilirsiniz</li>
-                                        <li>İki alan da doluysa yüklenen dosya önceliklidir</li>
+                                        <li>İki alan da doluysa URL önceliklidir</li>
                                     </ul>
                                 </div>
                             </div>
@@ -179,8 +183,8 @@
 
                     <button type="submit"
                             class="flex min-w-[140px] items-center justify-center gap-2 rounded-xl h-11 px-8 bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary text-white font-bold shadow-lg shadow-primary/30 hover:shadow-xl hover:shadow-primary/40 transition-all hover:-translate-y-0.5">
-                        <span class="material-symbols-outlined text-[20px]">add</span>
-                        Proje Ekle
+                        <span class="material-symbols-outlined text-[20px]">save</span>
+                        Kaydet
                     </button>
                 </div>
 
@@ -191,18 +195,13 @@
 </body>
 
 <script>
-const imagePreview = document.getElementById('imagePreview');
-const placeholderText = document.getElementById('placeholderText');
-
 // Image preview on file select
 document.getElementById('imageFileInput')?.addEventListener('change', function(e) {
     const file = e.target.files[0];
     if (file) {
         const reader = new FileReader();
         reader.onload = function(event) {
-            imagePreview.src = event.target.result;
-            imagePreview.classList.remove('hidden');
-            placeholderText.classList.add('hidden');
+            document.getElementById('imagePreview').src = event.target.result;
         };
         reader.readAsDataURL(file);
     }
@@ -212,12 +211,7 @@ document.getElementById('imageFileInput')?.addEventListener('change', function(e
 document.getElementById('imageUrlInput')?.addEventListener('input', function(e) {
     const url = e.target.value;
     if (url) {
-        imagePreview.src = url;
-        imagePreview.classList.remove('hidden');
-        placeholderText.classList.add('hidden');
-    } else {
-        imagePreview.classList.add('hidden');
-        placeholderText.classList.remove('hidden');
+        document.getElementById('imagePreview').src = url;
     }
 });
 </script>

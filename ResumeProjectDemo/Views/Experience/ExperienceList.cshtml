@@ -1,6 +1,7 @@
 ﻿@model List<ResumeProjectDemo.Entities.Experience>
 @{
     ViewData["Title"] = "ExperienceList";
+    ViewData["ActivePage"] = "Experience";
     Layout = "~/Views/AdminLayout/Index.cshtml";
 }
 
@@ -40,7 +41,7 @@
                         <th class="px-6 py-4 border-b dark:border-border-dark">Şirket Adı - Unvan</th>
                         <th class="px-6 py-4 border-b dark:border-border-dark text-center">Çalışma Tarihi</th>
                         <th class="px-6 py-4 border-b dark:border-border-dark">Açıklama</th>
-                        <th class="px-6 py-4 border-b dark:border-border-dark text-center w-16">Sil</th>
+                        <th  class="px-6 py-4 border-b dark:border-border-dark text-center w-16">Sil</th>
                         <th class="px-6 py-4 border-b dark:border-border-dark text-center w-20">Güncelle</th>
                     </tr>
                 </thead>
@@ -75,7 +76,7 @@
                             </td>
 
                                      <td class="px-6 py-5 text-right">
-                                <a href="/Experience/DeleteExperience/@experience.ExperienceId" class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-red-500 hover:bg-red-600 text-white rounded-lg font-medium text-xs transition-colors">
+                                <a href="/Experience/DeleteExrepience/@experience.ExperienceId" class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-red-500 hover:bg-red-600 text-white rounded-lg font-medium text-xs transition-colors">
                                     <span class="material-symbols-outlined text-[16px]">delete</span>
                                     Sil
                                 </a>

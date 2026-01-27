@@ -1,6 +1,10 @@
-﻿
+﻿@using Microsoft.AspNetCore.Mvc.Rendering
+@using ResumeProjectDemo.Context
+@inject ResumeContext _context
+
 @{
     Layout = null;
+    var unreadMessageCount = _context.Messages.Count(m => !m.IsRead);
 }
 
 <!DOCTYPE html>
@@ -13,14 +17,13 @@
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet" />
     <script id="tailwind-config">
         tailwind.config = {
             darkMode: "class",
             theme: {
                 extend: {
                     colors: {
-                        "primary": "#2eb8b8",
+                        "primary": "#13c8ec",
                         "background-light": "#f3f4f6",
                         "background-dark": "#1a1a1a",
                         "surface-dark": "#262626",
@@ -29,7 +32,7 @@
                     fontFamily: {
                         "display": ["Space Grotesk"]
                     },
-                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                    borderRadius: {"DEFAULT": "0.5rem", "lg": "1rem", "xl": "1.5rem", "full": "9999px"},
                 },
             },
         }
@@ -48,6 +51,15 @@
             background: #404040;
             border-radius: 10px;
         }
+        .glass-card {
+            background: rgba(35, 66, 72, 0.15);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
     </style>
 </head>
 <body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 antialiased font-display">
@@ -59,50 +71,54 @@
                     <span class="material-symbols-outlined">terminal</span>
                 </div>
                 <div>
-                    <h1 class="text-sm font-bold tracking-tight">DevAdmin</h1>
-                    <p class="text-[10px] text-slate-500 uppercase tracking-widest">Senior .NET Dev</p>
+                    <h1 class="text-sm font-bold tracking-tight">Admin</h1>
+                    <p class="text-[10px] text-slate-500 uppercase tracking-widest">Junior .NET Dev</p>
                 </div>
             </div>
             <nav class="flex-1 px-4 py-2 space-y-1 overflow-y-auto custom-scrollbar">
-                <div class="text-[10px] font-semibold text-slate-400 uppercase px-3 py-2 mt-4 mb-1">General</div>
-                <a class="flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg hover:bg-slate-100 dark:hover:bg-white/5 transition-colors" href="#">
+                <div class="text-[10px] font-semibold text-slate-400 uppercase px-3 py-2 mt-4 mb-1">Genel</div>
+
+                <a asp-controller="Dashboard" asp-action="DashboardList" class="flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg hover:bg-slate-100 dark:hover:bg-white/5 transition-colors @(ViewData["ActivePage"]?.ToString() == "Dashboard" ? "bg-primary/10 text-primary border border-primary/20" : "")">
                     <span class="material-symbols-outlined text-[20px]">dashboard</span>
                     Dashboard
                 </a>
-                <a class="flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg hover:bg-slate-100 dark:hover:bg-white/5 transition-colors" href="#">
+
+                <a asp-controller="About" asp-action="AboutList" class="flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg hover:bg-slate-100 dark:hover:bg-white/5 transition-colors @(ViewData["ActivePage"]?.ToString() == "About" ? "bg-primary/10 text-primary border border-primary/20" : "")">
                     <span class="material-symbols-outlined text-[20px]">person</span>
-                    About Me
+                    Benim Hakkımda
                 </a>
-                <a class="flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg hover:bg-slate-100 dark:hover:bg-white/5 transition-colors" href="#">
+
+                <a asp-controller="Skills" asp-action="SkillsList" class="flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg hover:bg-slate-100 dark:hover:bg-white/5 transition-colors @(ViewData["ActivePage"]?.ToString() == "Skills" ? "bg-primary/10 text-primary border border-primary/20" : "")" >
                     <span class="material-symbols-outlined text-[20px]">bolt</span>
-                    Skills
+                    Yeteneklerim
                 </a>
-                <a class="flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg hover:bg-slate-100 dark:hover:bg-white/5 transition-colors" href="#">
+
+                <a asp-controller="Experience" asp-action="ExperienceList" class="flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg hover:bg-slate-100 dark:hover:bg-white/5 transition-colors @(ViewData["ActivePage"]?.ToString() == "Experience" ? "bg-primary/10 text-primary border border-primary/20" : "")">
                     <span class="material-symbols-outlined text-[20px]">work</span>
-                    Experience
+                    Deneyimlerim
                 </a>
-                <a class="flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg bg-primary/10 text-primary border border-primary/20" href="#">
+
+                <a asp-controller="Portfolio" asp-action="PortfolioList" class="flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg hover:bg-slate-100 dark:hover:bg-white/5 transition-colors @(ViewData["ActivePage"]?.ToString() == "Portfolio" ? "bg-primary/10 text-primary border border-primary/20" : "")">
                     <span class="material-symbols-outlined text-[20px]">folder_open</span>
-                    Projects
+                    Projelerim
                 </a>
-                <div class="text-[10px] font-semibold text-slate-400 uppercase px-3 py-2 mt-6 mb-1">Education &amp; Verification</div>
-                <a class="flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg hover:bg-slate-100 dark:hover:bg-white/5 transition-colors" href="#">
-                    <span class="material-symbols-outlined text-[20px]">school</span>
-                    Education
-                </a>
-                <a class="flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg hover:bg-slate-100 dark:hover:bg-white/5 transition-colors" href="#">
-                    <span class="material-symbols-outlined text-[20px]">verified</span>
-                    Certificates
-                </a>
-                <div class="text-[10px] font-semibold text-slate-400 uppercase px-3 py-2 mt-6 mb-1">Content</div>
-                <a class="flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg hover:bg-slate-100 dark:hover:bg-white/5 transition-colors" href="#">
+
+               
+
+                <div class="text-[10px] font-semibold text-slate-400 uppercase px-3 py-2 mt-6 mb-1">İçerik</div>
+
+                <a class="flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg hover:bg-slate-100 dark:hover:bg-white/5 transition-colors @(ViewData["ActivePage"]?.ToString() == "Blog" ? "bg-primary/10 text-primary border border-primary/20" : "")" href="#">
                     <span class="material-symbols-outlined text-[20px]">article</span>
                     Blog
                 </a>
-                <a class="flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg hover:bg-slate-100 dark:hover:bg-white/5 transition-colors" href="#">
+
+                <a asp-controller="Message" asp-action="MessageList" class="flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg hover:bg-slate-100 dark:hover:bg-white/5 transition-colors @(ViewData["ActivePage"]?.ToString() == "Message" ? "bg-primary/10 text-primary border border-primary/20" : "")">
                     <span class="material-symbols-outlined text-[20px]">mail</span>
-                    Messages
-                    <span class="ml-auto bg-primary text-white text-[10px] px-1.5 py-0.5 rounded-full font-bold italic">4</span>
+                    Mesajlar
+                    @if (unreadMessageCount > 0)
+                    {
+                        <span class="ml-auto bg-red-500 text-white text-[10px] px-2 py-0.5 rounded-full font-bold animate-pulse">@unreadMessageCount</span>
+                    }
                 </a>
             </nav>
             <div class="p-4 border-t border-slate-200 dark:border-border-dark">
@@ -121,10 +137,17 @@
                     <span class="px-2 py-0.5 text-[10px] bg-slate-100 dark:bg-white/10 rounded uppercase tracking-widest font-bold">v2.4</span>
                 </div>
                 <div class="flex items-center gap-6">
-                    <button class="relative p-2 text-slate-400 hover:text-primary transition-colors">
-                        <span class="material-symbols-outlined">notifications</span>
-                        <span class="absolute top-2 right-2 size-2 bg-primary rounded-full border-2 border-white dark:border-[#121212]"></span>
-                    </button>
+                    <a asp-controller="Message" asp-action="MessageList" 
+                       class="relative p-2 text-slate-400 hover:text-primary transition-colors group"
+                       title="Mesajlar">
+                        <span class="material-symbols-outlined text-2xl">mail</span>
+                        @if (unreadMessageCount > 0)
+                        {
+                            <span class="absolute -top-1 -right-1 min-w-[20px] h-5 px-1.5 bg-red-500 text-white text-xs font-bold rounded-full flex items-center justify-center border-2 border-white dark:border-[#121212] group-hover:scale-110 transition-transform">
+                                @(unreadMessageCount > 99 ? "99+" : unreadMessageCount.ToString())
+                            </span>
+                        }
+                    </a>
                     <div class="flex items-center gap-3 pl-6 border-l border-slate-200 dark:border-border-dark">
                         <div class="text-right">
                             <p class="text-xs font-bold">Alex Thorne</p>
@@ -139,6 +162,8 @@
                 @RenderBody()
             </div>
         </main>
+       
     </div>
+
 </body>
 </html>

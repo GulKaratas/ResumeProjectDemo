@@ -1,0 +1,322 @@
+﻿@model List<ResumeProjectDemo.Entities.About>
+@{
+    ViewData["Title"] = "AboutList";
+    ViewData["ActivePage"] = "About";
+    Layout = "~/Views/AdminLayout/Index.cshtml";
+}
+
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-white min-h-screen">
+    <main class="max-w-[1200px] mx-auto px-4 py-8">
+        
+        <!-- Success/Error Messages -->
+        @if (TempData["Success"] != null)
+        {
+            <div id="successMsg" class="mb-6 p-4 bg-green-500/10 border border-green-500/30 rounded-xl flex items-center gap-3 animate-pulse">
+                <span class="material-symbols-outlined text-green-500">check_circle</span>
+                <p class="text-green-500 font-medium">@TempData["Success"]</p>
+            </div>
+        }
+        @if (TempData["Error"] != null)
+        {
+            <div id="errorMsg" class="mb-6 p-4 bg-red-500/10 border border-red-500/30 rounded-xl flex items-center gap-3">
+                <span class="material-symbols-outlined text-red-500">error</span>
+                <p class="text-red-500 font-medium">@TempData["Error"]</p>
+            </div>
+        }
+
+        <!-- Page Heading -->
+        <div class="flex flex-wrap justify-between items-end gap-4 mb-8">
+            <div class="flex flex-col gap-2">
+                <p class="text-slate-900 dark:text-white text-4xl font-black leading-tight tracking-[-0.033em]">Benim Hakkımda</p>
+                <p class="text-slate-500 dark:text-[#92c0c9] text-base font-normal leading-normal">Portfolyonuzdaki kişisel bilgileri buradan düzenleyebilirsiniz.</p>
+            </div>
+            <div class="flex gap-3">
+                <button id="editBtn" onclick="toggleEditMode()" type="button"
+                        class="flex min-w-[84px] cursor-pointer items-center justify-center gap-2 rounded-xl h-10 px-6 bg-slate-200 dark:bg-[#234248] text-slate-900 dark:text-white text-sm font-bold leading-normal transition-all hover:bg-slate-300 dark:hover:bg-[#2d555d] hover:shadow-lg">
+                    <span class="material-symbols-outlined text-[20px]">edit</span>
+                    <span id="btnText" class="truncate">Düzenle</span>
+                </button>
+            </div>
+        </div>
+
+        @foreach (var about in Model)
+        {
+            <form id="aboutForm" asp-controller="About" asp-action="UpdateAbout" method="post" enctype="multipart/form-data">
+                <!-- Main Form Content -->
+                <div class="glass-card rounded-xl p-6 md:p-8 shadow-2xl">
+                    <h3 class="text-slate-900 dark:text-white tracking-tight text-2xl font-bold leading-tight mb-8 flex items-center gap-3">
+                        <span class="material-symbols-outlined text-primary text-3xl">person</span>
+                        Profil Bilgileri
+                    </h3>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-10">
+                        <!-- Left Column: Media -->
+                        <div class="lg:col-span-4 flex flex-col items-center gap-6">
+                            <div class="relative group">
+                                <div id="profileImagePreview" class="w-48 h-48 bg-center bg-no-repeat bg-cover rounded-full border-4 border-primary/20 shadow-xl"
+                                     style="background-image: url('@about.ImageUrl')">
+                                </div>
+
+                                <div onclick="document.getElementById('imageFileInput').click()"
+                                     class="absolute inset-0 flex items-center justify-center bg-black/60 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-300 cursor-pointer">
+                                    <div class="text-center">
+                                        <span class="material-symbols-outlined text-white text-4xl mb-2 block">photo_camera</span>
+                                        <p class="text-white text-xs font-medium">Fotoğrafı Değiştir</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="w-full space-y-4">
+                                <div class="flex flex-col gap-2 text-center mb-2">
+                                    <p class="text-slate-900 dark:text-white text-base font-semibold">Profil Fotoğrafı</p>
+                                    <p class="text-slate-500 dark:text-[#92c0c9] text-sm">Görünür profil resminiz</p>
+                                </div>
+
+                                <!-- Hidden File Input -->
+                                <input type="file"
+                                       id="imageFileInput"
+                                       name="imageFile"
+                                       accept="image/*"
+                                       class="hidden"
+                                       onchange="previewImage(event)" />
+
+                                <button type="button"
+                                        onclick="document.getElementById('imageFileInput').click()"
+                                        class="w-full flex items-center justify-center rounded-xl h-11 px-4 bg-gradient-to-r from-primary/10 to-primary/5 hover:from-primary hover:to-primary/80 text-primary hover:text-white border border-primary/30 gap-2 text-sm font-bold transition-all duration-300 hover:shadow-lg hover:shadow-primary/30">
+                                    <span class="material-symbols-outlined text-[20px]">upload</span>
+                                    Fotoğrafı Değiştir
+                                </button>
+                            </div>
+                        </div>
+
+                 
+                        <!-- Right Column: Form Fields -->
+                        <div class="lg:col-span-8 space-y-6">
+
+                            <input type="hidden" id="aboutId" asp-for="@about.AboutId" />
+                            <input type="hidden" id="imageUrl" asp-for="@about.ImageUrl" />
+
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <!-- İsim Soyisim -->
+                                <div class="flex flex-col gap-2">
+                                    <label class="text-sm font-semibold text-slate-700 dark:text-slate-300 px-1 flex items-center gap-2">
+                                        <span class="material-symbols-outlined text-[18px] text-primary">badge</span>
+                                        İsim Soyisim
+                                    </label>
+                                    <input id="nameSurname" asp-for="@about.NameSurname"
+                                           readonly
+                                           class="w-full rounded-lg bg-slate-100 dark:bg-background-dark/30 border border-slate-300 dark:border-[#234248] px-4 py-3 text-slate-600 dark:text-slate-400 cursor-not-allowed outline-none transition-all duration-300 focus:ring-2 focus:ring-primary/50" />
+                                </div>
+
+                                <!-- Ünvan -->
+                                <div class="flex flex-col gap-2">
+                                    <label class="text-sm font-semibold text-slate-700 dark:text-slate-300 px-1 flex items-center gap-2">
+                                        <span class="material-symbols-outlined text-[18px] text-primary">work</span>
+                                        Ünvan
+                                    </label>
+                                    <input id="title" asp-for="@about.Title"
+                                           readonly
+                                           class="w-full rounded-lg bg-slate-100 dark:bg-background-dark/30 border border-slate-300 dark:border-[#234248] px-4 py-3 text-slate-600 dark:text-slate-400 cursor-not-allowed outline-none transition-all duration-300 focus:ring-2 focus:ring-primary/50" />
+                                </div>
+                            </div>
+
+                            <!-- Hakkımda -->
+                            <div class="flex flex-col gap-2">
+                                <label class="text-sm font-semibold text-slate-700 dark:text-slate-300 px-1 flex items-center gap-2">
+                                    <span class="material-symbols-outlined text-[18px] text-primary">description</span>
+                                    Hakkımda
+                                </label>
+                                <textarea id="description" asp-for="@about.Description"
+                                          rows="8"
+                                          readonly
+                                          class="w-full rounded-lg bg-slate-100 dark:bg-background-dark/30 border border-slate-300 dark:border-[#234248] px-4 py-3 text-slate-600 dark:text-slate-400 cursor-not-allowed outline-none resize-none transition-all duration-300 focus:ring-2 focus:ring-primary/50"></textarea>
+                                <p class="text-xs text-slate-500 dark:text-slate-400 px-1">
+                                    <span id="charCount">@about.Description?.Length</span> karakter
+                                </p>
+                            </div>
+
+                            <!-- Action Buttons -->
+                            <div class="flex justify-end items-center gap-4 pt-6 border-t border-slate-300 dark:border-[#234248]">
+                                <a asp-action="AboutList"
+                                   class="flex min-w-[100px] items-center justify-center gap-2 rounded-xl h-11 px-6 border border-slate-300 dark:border-[#234248] text-slate-700 dark:text-slate-300 text-sm font-bold hover:bg-slate-100 dark:hover:bg-white/5 transition-all">
+                                    <span class="material-symbols-outlined text-[18px]">close</span>
+                                    Vazgeç
+                                </a>
+
+                                <button id="saveBtn" type="submit" disabled
+                                        class="flex min-w-[120px] items-center justify-center gap-2 rounded-xl h-11 px-8 bg-primary text-background-dark text-sm font-bold shadow-lg shadow-primary/20 hover:shadow-primary/40 transition-all hover:-translate-y-0.5 disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:translate-y-0">
+                                    <span class="material-symbols-outlined text-[18px]">save</span>
+                                    <span id="saveBtnText">Kaydet</span>
+                                </button>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </form>
+        }
+
+        <!-- Social Media Section -->
+        <!-- Social Media Section -->
+        <div class="mt-8">
+            <h4 class="text-slate-900 dark:text-white text-xl font-bold mb-6 px-1 flex items-center gap-3">
+                <span class="material-symbols-outlined text-primary text-2xl">share</span>
+                Sosyal Medya Bağlantıları
+            </h4>
+
+            <div class="grid grid-cols-2 gap-4">
+
+                <!-- GitHub -->
+                <a href="https://github.com/GulKaratas"
+                   target="_blank"
+                   class="glass-card p-5 rounded-xl flex items-center gap-4 hover:shadow-lg transition-all group cursor-pointer">
+
+                    <div class="size-12 rounded-lg bg-primary/10 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-all">
+                        <span class="material-symbols-outlined text-[24px]">code</span>
+                    </div>
+
+                    <div class="flex-1">
+                        <p class="text-xs font-bold text-slate-500 dark:text-primary/70 uppercase mb-1">GitHub</p>
+                        <p class="text-sm text-slate-900 dark:text-white font-medium">
+                            github.com/GulKaratas
+                        </p>
+                    </div>
+
+                    <span class="material-symbols-outlined text-slate-400 group-hover:text-primary transition-all">
+                        arrow_outward
+                    </span>
+                </a>
+
+                <!-- LinkedIn -->
+                <a href="https://www.linkedin.com/in/g%C3%BCl-karata%C5%9F-29a210263/"
+                   target="_blank"
+                   class="glass-card p-5 rounded-xl flex items-center gap-4 hover:shadow-lg transition-all group cursor-pointer">
+
+                    <div class="size-12 rounded-lg bg-primary/10 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-all">
+                        <span class="material-symbols-outlined text-[24px]">work</span>
+                    </div>
+
+                    <div class="flex-1">
+                        <p class="text-xs font-bold text-slate-500 dark:text-primary/70 uppercase mb-1">LinkedIn</p>
+                        <p class="text-sm text-slate-900 dark:text-white font-medium">
+                            linkedin.com/in/gul-karatas
+                        </p>
+                    </div>
+
+                    <span class="material-symbols-outlined text-slate-400 group-hover:text-primary transition-all">
+                        arrow_outward
+                    </span>
+                </a>
+
+            </div>
+        </div>
+    </main>
+
+    <script>
+        let isEditMode = false;
+
+        // Success message auto-hide
+        setTimeout(() => {
+            const successMsg = document.getElementById('successMsg');
+            if (successMsg) {
+                successMsg.style.transition = 'all 0.5s ease';
+                successMsg.style.opacity = '0';
+                setTimeout(() => successMsg.remove(), 500);
+            }
+        }, 3000);
+
+        // Fotoğraf önizleme fonksiyonu - BURAYA TAŞINDI
+        function previewImage(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('profileImagePreview').style.backgroundImage = `url('${e.target.result}')`;
+                };
+                reader.readAsDataURL(file);
+
+                // Edit mode'u otomatik aç
+                if (!isEditMode) {
+                    toggleEditMode();
+                }
+            }
+        }
+
+        function toggleEditMode() {
+            isEditMode = !isEditMode;
+
+            const inputs = ['nameSurname', 'title', 'description'];
+            const editBtn = document.getElementById('editBtn');
+            const btnText = document.getElementById('btnText');
+            const saveBtn = document.getElementById('saveBtn');
+
+            inputs.forEach(id => {
+                const element = document.getElementById(id);
+                if (isEditMode) {
+                    // Edit Mode ON
+                    element.removeAttribute('readonly');
+                    element.classList.remove(
+                        'cursor-not-allowed',
+                        'bg-slate-100',
+                        'dark:bg-background-dark/30',
+                        'text-slate-600',
+                        'dark:text-slate-400'
+                    );
+                    element.classList.add(
+                        'bg-white',
+                        'dark:bg-surface-dark',
+                        'text-slate-900',
+                        'dark:text-white',
+                        'ring-2',
+                        'ring-primary/30'
+                    );
+                } else {
+                    // Edit Mode OFF
+                    element.setAttribute('readonly', 'true');
+                    element.classList.add(
+                        'cursor-not-allowed',
+                        'bg-slate-100',
+                        'dark:bg-background-dark/30',
+                        'text-slate-600',
+                        'dark:text-slate-400'
+                    );
+                    element.classList.remove(
+                        'bg-white',
+                        'dark:bg-surface-dark',
+                        'text-slate-900',
+                        'dark:text-white',
+                        'ring-2',
+                        'ring-primary/30'
+                    );
+                }
+            });
+
+            // Button styling
+            if (isEditMode) {
+                btnText.innerHTML = '<span class="material-symbols-outlined text-[18px]">close</span> İptal';
+                editBtn.classList.remove('bg-slate-200', 'dark:bg-[#234248]', 'hover:bg-slate-300', 'dark:hover:bg-[#2d555d]');
+                editBtn.classList.add('bg-red-500', 'hover:bg-red-600', 'text-white');
+                saveBtn.disabled = false;
+            } else {
+                btnText.innerHTML = '<span class="material-symbols-outlined text-[18px]">edit</span> Düzenle';
+                editBtn.classList.add('bg-slate-200', 'dark:bg-[#234248]', 'hover:bg-slate-300', 'dark:hover:bg-[#2d555d]');
+                editBtn.classList.remove('bg-red-500', 'hover:bg-red-600', 'text-white');
+                saveBtn.disabled = true;
+            }
+        }
+
+        // Character counter for description
+        document.getElementById('description')?.addEventListener('input', function() {
+            document.getElementById('charCount').textContent = this.value.length;
+        });
+
+        // Form submit loading state
+        document.getElementById('aboutForm')?.addEventListener('submit', function() {
+            const saveBtn = document.getElementById('saveBtn');
+            const saveBtnText = document.getElementById('saveBtnText');
+            saveBtn.disabled = true;
+            saveBtnText.innerHTML = '<span class="material-symbols-outlined text-[18px] animate-spin">refresh</span> Kaydediliyor...';
+        });
+    </script>
+</body>
+</html>
