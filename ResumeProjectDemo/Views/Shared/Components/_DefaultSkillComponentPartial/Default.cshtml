@@ -1,29 +1,55 @@
 ﻿@model List<ResumeProjectDemo.Entities.Skils>
 
-<section id="skills" class="bg-light">
+<section id="skills" class="skills-section">
     <div class="container">
-        <div class="row mb-8">
+        <div class="row mb-5">
             <div class="col-lg-10 col-xl-8 mx-lg-auto text-center">
-                <div class="section-title h2 mb-3">
-                    <h2 class="mb-0">Yeteneklerim - Teknolojiler</h2>
-                    <span class="title-letter">Y</span>
+                <div class="section-title-modern mb-4">
+                    <h2 class="display-4 fw-bold mb-3">Teknoloji & Beceriler</h2>
+                    <p class="lead text-muted">Profesyonel projelerimde kullandığım teknolojiler ve yetkinlik seviyelerim</p>
                 </div>
-                <p>Teknik becerilerim ve kullandığım teknolojiler</p>
             </div>
         </div>
         
         @if (Model != null && Model.Any())
         {
-            <div class="row">
+            <div class="row g-4 mb-5">
                 @foreach (var skill in Model)
                 {
-                    <div class="col-md-6 mb-6">
-                        <div class="d-flex justify-content-between align-items-center mb-2">
-                            <p class="h6 mb-0">@skill.Title</p>
-                            <span class="badge bg-primary">@skill.Percentage%</span>
-                        </div>
-                        <div class="progress rounded-0" style="height:5px">
-                            <div class="progress-bar" role="progressbar" style="width: @skill.Percentage%" aria-valuenow="@skill.Percentage" aria-valuemin="0" aria-valuemax="100"></div>
+                    var colorClass = skill.Percentage >= 80 ? "expert" : skill.Percentage >= 60 ? "advanced" : "intermediate";
+                    
+                    <div class="col-lg-6" data-aos="fade-up">
+                        <div class="skill-card">
+                            <div class="skill-header">
+                                <div class="skill-icon @colorClass">
+                                    <i class="fas fa-code"></i>
+                                </div>
+                                <div class="skill-info">
+                                    <h5 class="skill-title mb-1">@skill.Title</h5>
+                                    @if(!string.IsNullOrEmpty(skill.Category))
+                                    {
+                                        <span class="skill-category">@skill.Category</span>
+                                    }
+                                </div>
+                                <div class="skill-percentage">
+                                    <span class="percentage-value">@skill.Percentage%</span>
+                                    <div class="percentage-circle @colorClass">
+                                        <svg viewBox="0 0 36 36" class="circular-chart">
+                                            <path class="circle-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"/>
+                                            <path class="circle" stroke-dasharray="@skill.Percentage, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"/>
+                                        </svg>
+                                    </div>
+                                </div>
+                            </div>
+                            @if(!string.IsNullOrEmpty(skill.Description))
+                            {
+                                <p class="skill-description">@skill.Description</p>
+                            }
+                            <div class="skill-progress">
+                                <div class="progress-bar-modern @colorClass" style="width: @skill.Percentage%">
+                                    <span class="progress-shine"></span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 }
@@ -33,9 +59,294 @@
         {
             <div class="row">
                 <div class="col-12 text-center py-5">
-                    <p class="text-muted">Henüz yetenek eklenmemiş.</p>
+                    <div class="empty-state">
+                        <i class="fas fa-code text-muted mb-3" style="font-size: 3rem;"></i>
+                        <p class="text-muted">Henüz yetenek eklenmemiş.</p>
+                    </div>
                 </div>
             </div>
         }
     </div>
 </section>
+
+<style>
+.skills-section {
+    padding: 100px 0;
+    background: #f8f9fa;
+    position: relative;
+    overflow: hidden;
+}
+
+.skills-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="grid" width="100" height="100" patternUnits="userSpaceOnUse"><path d="M 100 0 L 0 0 0 100" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="1"/></pattern></defs><rect width="100%" height="100%" fill="url(%23grid)"/></svg>');
+    opacity: 0.5;
+}
+
+.section-badge {
+    display: inline-block;
+    padding: 8px 20px;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 50px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #6c63ff;
+    margin-bottom: 1rem;
+    box-shadow: 0 4px 15px rgba(108, 99, 255, 0.2);
+}
+
+.skill-card {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 20px;
+    padding: 25px;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 8px 32px rgba(31, 38, 135, 0.15);
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 20px;
+}
+
+.skill-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    transition: left 0.5s;
+}
+
+.skill-card:hover::before {
+    left: 100%;
+}
+
+.skill-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 45px rgba(31, 38, 135, 0.25);
+}
+
+.skill-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.skill-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    color: white;
+    flex-shrink: 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.skill-icon::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    transform: translate(-50%, -50%);
+    transition: width 0.5s, height 0.5s;
+}
+
+.skill-card:hover .skill-icon::after {
+    width: 100px;
+    height: 100px;
+}
+
+.skill-icon.expert {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+}
+
+.skill-icon.advanced {
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    box-shadow: 0 4px 15px rgba(245, 87, 108, 0.4);
+}
+
+.skill-icon.intermediate {
+    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+    box-shadow: 0 4px 15px rgba(79, 172, 254, 0.4);
+}
+
+.skill-info {
+    flex: 1;
+}
+
+.skill-title {
+    font-weight: 700;
+    color: #2d3748;
+    font-size: 1.1rem;
+}
+
+.skill-category {
+    font-size: 0.75rem;
+    color: #718096;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.skill-percentage {
+    text-align: right;
+}
+
+.percentage-value {
+    font-size: 1.5rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.percentage-circle {
+    width: 36px;
+    height: 36px;
+    margin: 0 auto;
+}
+
+.circular-chart {
+    display: block;
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.circle-bg {
+    fill: none;
+    stroke: #e2e8f0;
+    stroke-width: 3;
+}
+
+.circle {
+    fill: none;
+    stroke-width: 3;
+    stroke-linecap: round;
+    animation: progress 1.5s ease-out forwards;
+}
+
+.expert .circle {
+    stroke: url(#expert-gradient);
+}
+
+.advanced .circle {
+    stroke: url(#advanced-gradient);
+}
+
+.intermediate .circle {
+    stroke: url(#intermediate-gradient);
+}
+
+@@keyframes progress {
+    0% {
+        stroke-dasharray: 0 100;
+    }
+}
+
+.skill-description {
+    font-size: 0.875rem;
+    color: #718096;
+    margin-bottom: 15px;
+    line-height: 1.6;
+}
+
+.skill-progress {
+    height: 8px;
+    background: #e2e8f0;
+    border-radius: 50px;
+    overflow: hidden;
+    position: relative;
+}
+
+.progress-bar-modern {
+    height: 100%;
+    border-radius: 50px;
+    position: relative;
+    transition: width 1.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    animation: progressLoad 1.5s ease-out;
+}
+
+.progress-bar-modern.expert {
+    background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+}
+
+.progress-bar-modern.advanced {
+    background: linear-gradient(90deg, #f093fb 0%, #f5576c 100%);
+}
+
+.progress-bar-modern.intermediate {
+    background: linear-gradient(90deg, #4facfe 0%, #00f2fe 100%);
+}
+
+.progress-shine {
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.6), transparent);
+    animation: shine 2s infinite;
+}
+
+@@keyframes shine {
+    0%, 100% {
+        left: -100%;
+    }
+    50% {
+        left: 150%;
+    }
+}
+
+@@keyframes progressLoad {
+    0% {
+        width: 0;
+    }
+}
+
+@@media (max-width: 768px) {
+    .skill-card {
+        padding: 20px;
+    }
+    
+    .percentage-value {
+        font-size: 1.2rem;
+    }
+}
+</style>
+
+<svg style="display: none;">
+    <defs>
+        <linearGradient id="expert-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" style="stop-color:#667eea;stop-opacity:1" />
+            <stop offset="100%" style="stop-color:#764ba2;stop-opacity:1" />
+        </linearGradient>
+        <linearGradient id="advanced-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" style="stop-color:#f093fb;stop-opacity:1" />
+            <stop offset="100%" style="stop-color:#f5576c;stop-opacity:1" />
+        </linearGradient>
+        <linearGradient id="intermediate-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" style="stop-color:#4facfe;stop-opacity:1" />
+            <stop offset="100%" style="stop-color:#00f2fe;stop-opacity:1" />
+        </linearGradient>
+    </defs>
+</svg>

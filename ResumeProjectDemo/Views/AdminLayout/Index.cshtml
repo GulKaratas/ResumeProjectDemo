@@ -65,7 +65,7 @@
 <body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 antialiased font-display">
     <div class="flex h-screen overflow-hidden">
         <!-- Sidebar Navigation -->
-        <aside class="w-64 flex-shrink-0 bg-white dark:bg-[#121212] border-r border-slate-200 dark:border-border-dark flex flex-col">
+        <aside class="w-64 flex-shrink-0 bg-gradient-to-b from-gray-100 to-gray-200 dark:bg-gradient-to-b dark:from-slate-800 dark:to-slate-900 border-r border-gray-300 dark:border-slate-700 flex flex-col shadow-lg">
             <div class="p-6 flex items-center gap-3">
                 <div class="size-10 rounded-lg bg-primary flex items-center justify-center text-white">
                     <span class="material-symbols-outlined">terminal</span>
@@ -78,27 +78,32 @@
             <nav class="flex-1 px-4 py-2 space-y-1 overflow-y-auto custom-scrollbar">
                 <div class="text-[10px] font-semibold text-slate-400 uppercase px-3 py-2 mt-4 mb-1">Genel</div>
 
-                <a asp-controller="Dashboard" asp-action="DashboardList" class="flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg hover:bg-slate-100 dark:hover:bg-white/5 transition-colors @(ViewData["ActivePage"]?.ToString() == "Dashboard" ? "bg-primary/10 text-primary border border-primary/20" : "")">
+                <a asp-controller="Dashboard" asp-action="DashboardList" class="flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg hover:bg-gray-300 dark:hover:bg-white/5 transition-colors @(ViewData["ActivePage"]?.ToString() == "Dashboard" ? "bg-primary/10 text-primary border border-primary/20" : "")">
                     <span class="material-symbols-outlined text-[20px]">dashboard</span>
                     Dashboard
                 </a>
 
-                <a asp-controller="About" asp-action="AboutList" class="flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg hover:bg-slate-100 dark:hover:bg-white/5 transition-colors @(ViewData["ActivePage"]?.ToString() == "About" ? "bg-primary/10 text-primary border border-primary/20" : "")">
+                <a asp-controller="About" asp-action="AboutList" class="flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg hover:bg-gray-300 dark:hover:bg-white/5 transition-colors @(ViewData["ActivePage"]?.ToString() == "About" ? "bg-primary/10 text-primary border border-primary/20" : "")">
                     <span class="material-symbols-outlined text-[20px]">person</span>
                     Benim Hakkımda
                 </a>
 
-                <a asp-controller="Skills" asp-action="SkillsList" class="flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg hover:bg-slate-100 dark:hover:bg-white/5 transition-colors @(ViewData["ActivePage"]?.ToString() == "Skills" ? "bg-primary/10 text-primary border border-primary/20" : "")" >
+                <a asp-controller="Skills" asp-action="SkillsList" class="flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg hover:bg-gray-300 dark:hover:bg-white/5 transition-colors @(ViewData["ActivePage"]?.ToString() == "Skills" ? "bg-primary/10 text-primary border border-primary/20" : "")" >
                     <span class="material-symbols-outlined text-[20px]">bolt</span>
                     Yeteneklerim
                 </a>
 
-                <a asp-controller="Experience" asp-action="ExperienceList" class="flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg hover:bg-slate-100 dark:hover:bg-white/5 transition-colors @(ViewData["ActivePage"]?.ToString() == "Experience" ? "bg-primary/10 text-primary border border-primary/20" : "")">
+                <a asp-controller="Experience" asp-action="ExperienceList" class="flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg hover:bg-gray-300 dark:hover:bg-white/5 transition-colors @(ViewData["ActivePage"]?.ToString() == "Experience" ? "bg-primary/10 text-primary border border-primary/20" : "")">
                     <span class="material-symbols-outlined text-[20px]">work</span>
                     Deneyimlerim
                 </a>
 
-                <a asp-controller="Portfolio" asp-action="PortfolioList" class="flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg hover:bg-slate-100 dark:hover:bg-white/5 transition-colors @(ViewData["ActivePage"]?.ToString() == "Portfolio" ? "bg-primary/10 text-primary border border-primary/20" : "")">
+                <a asp-controller="Education" asp-action="EducationList" class="flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg hover:bg-gray-300 dark:hover:bg-white/5 transition-colors @(ViewData["ActivePage"]?.ToString() == "Education" ? "bg-primary/10 text-primary border border-primary/20" : "")">
+                    <span class="material-symbols-outlined text-[20px]">school</span>
+                    Eğitimlerim
+                </a>
+
+                <a asp-controller="Portfolio" asp-action="PortfolioList" class="flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg hover:bg-gray-300 dark:hover:bg-white/5 transition-colors @(ViewData["ActivePage"]?.ToString() == "Portfolio" ? "bg-primary/10 text-primary border border-primary/20" : "")">
                     <span class="material-symbols-outlined text-[20px]">folder_open</span>
                     Projelerim
                 </a>
@@ -107,12 +112,12 @@
 
                 <div class="text-[10px] font-semibold text-slate-400 uppercase px-3 py-2 mt-6 mb-1">İçerik</div>
 
-                <a class="flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg hover:bg-slate-100 dark:hover:bg-white/5 transition-colors @(ViewData["ActivePage"]?.ToString() == "Blog" ? "bg-primary/10 text-primary border border-primary/20" : "")" href="#">
+                <a class="flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg hover:bg-gray-300 dark:hover:bg-white/5 transition-colors @(ViewData["ActivePage"]?.ToString() == "Blog" ? "bg-primary/10 text-primary border border-primary/20" : "")" href="#">
                     <span class="material-symbols-outlined text-[20px]">article</span>
                     Blog
                 </a>
 
-                <a asp-controller="Message" asp-action="MessageList" class="flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg hover:bg-slate-100 dark:hover:bg-white/5 transition-colors @(ViewData["ActivePage"]?.ToString() == "Message" ? "bg-primary/10 text-primary border border-primary/20" : "")">
+                <a asp-controller="Message" asp-action="MessageList" class="flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg hover:bg-gray-300 dark:hover:bg-white/5 transition-colors @(ViewData["ActivePage"]?.ToString() == "Message" ? "bg-primary/10 text-primary border border-primary/20" : "")">
                     <span class="material-symbols-outlined text-[20px]">mail</span>
                     Mesajlar
                     @if (unreadMessageCount > 0)
@@ -121,7 +126,7 @@
                     }
                 </a>
             </nav>
-            <div class="p-4 border-t border-slate-200 dark:border-border-dark">
+            <div class="p-4 border-t border-gray-300 dark:border-border-dark">
                 <a class="flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg text-slate-500 hover:text-red-500 transition-colors" href="#">
                     <span class="material-symbols-outlined text-[20px]">logout</span>
                     Logout
@@ -129,9 +134,9 @@
             </div>
         </aside>
         <!-- Main Content -->
-        <main class="flex-1 flex flex-col overflow-hidden bg-background-light dark:bg-background-dark">
+        <main class="flex-1 flex flex-col overflow-hidden bg-gradient-to-br from-slate-50 via-white to-slate-100 dark:bg-gradient-to-br dark:from-slate-900 dark:via-slate-800 dark:to-slate-900">
             <!-- Top Navbar -->
-            <header class="h-16 flex-shrink-0 flex items-center justify-between px-8 bg-white dark:bg-[#121212] border-b border-slate-200 dark:border-border-dark">
+            <header class="h-16 flex-shrink-0 flex items-center justify-between px-8 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-700 shadow-sm">
                 <div class="flex items-center gap-2">
                     <h2 class="text-lg font-bold">Developer Admin Panel</h2>
                     <span class="px-2 py-0.5 text-[10px] bg-slate-100 dark:bg-white/10 rounded uppercase tracking-widest font-bold">v2.4</span>
@@ -150,11 +155,16 @@
                     </a>
                     <div class="flex items-center gap-3 pl-6 border-l border-slate-200 dark:border-border-dark">
                         <div class="text-right">
-                            <p class="text-xs font-bold">Alex Thorne</p>
+                            <p class="text-xs font-bold">Gül Karataş</p>
                             <p class="text-[10px] text-slate-500 uppercase tracking-tighter">Admin</p>
                         </div>
-                        <div class="size-10 rounded-full bg-cover bg-center border border-slate-200 dark:border-border-dark" data-alt="Modern professional headshot of a developer" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAbafQj4KATL--bzVWVXtHOfMaUMO998Po3SYoyjzPbygTfTbQRl3R_VGa8_FhxlTvzD9WvwCn4XDBa1fPRdQaEXoDiT4i92omJaEnBlQ6b3AB6tknAk6H7EhemzLnBPNGhqlQc-A4XP5cCZZrGQ_lSOWS45xVwCXIn0GdkvhRuDTbgTAKt9Qj3vauVLIV7qAlYqCQ3VZyaS0tlZ9E11jSChAfK8PWbUfComtuwLXS0ijF1VHujy30dc9MyIM_J9JCPD6NohhFpjyc')"></div>
+
+                        <div class="size-10 rounded-full bg-cover bg-center border border-slate-200 dark:border-border-dark"
+                             data-alt="Modern professional headshot of a developer"
+                             style="background-image: url('/images/1.jpeg');">
+                        </div>
                     </div>
+
                 </div>
             </header>
             <!-- Page Content Scroll Area -->

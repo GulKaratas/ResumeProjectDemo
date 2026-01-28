@@ -1,86 +1,95 @@
-﻿<section id="contact">
-	<div class="container">
-		<div class="row">
-			<div class="col-lg-10 mx-lg-auto">
-				<div class="row mb-8">
-					<div class="col-lg-8 mx-lg-auto text-center">
-						<div class="section-title h2 mb-3">
-							<h2 class="mb-0">Bana Yazın</h2>
-							<span class="title-letter">C</span>
-						</div>
-						<p>Bir sorununuz olduğunda bana yazın.</p>
-					</div>
+﻿<section id="contact" class="contact-section">
+	<div class="contact-bg-shapes">
+		<div class="shape shape-1"></div>
+		<div class="shape shape-2"></div>
+		<div class="shape shape-3"></div>
+	</div>
+	
+	<div class="container position-relative">
+		<div class="row mb-4">
+			<div class="col-lg-10 col-xl-8 mx-lg-auto text-center">
+				<div class="section-title-modern mb-3">
+					<h2 class="display-5 fw-bold mb-2 text-dark">Benimle İletişime Geçin</h2>
+					<p class="text-muted">Projeleriniz veya sorularınız için bana ulaşabilirsiniz</p>
 				</div>
-				<div class="row mb-8">
-					<div class="col-md-4 mb-5 mb-md-0">
-						<div class="feature-block">
-							<div class="feature-icon text-primary mb-4">
-								<div class="mx-auto">
-									<i class="ti-mobile"></i>
-								</div>
+			</div>
+		</div>
+		
+		<div class="row mb-3">
+			<div class="col-lg-8 mx-lg-auto">
+				<div class="row g-3">
+					<div class="col-md-4" data-aos="fade-up">
+						<div class="contact-info-card-compact">
+							<div class="contact-icon-small">
+								<i class="fas fa-phone-alt"></i>
 							</div>
-							<p class="text-center">
-
-								0546 456 45 23
-								<br />
-							</p>
+							<p class="contact-label">Telefon</p>
+							<a href="tel:05464564523" class="contact-value">0546 456 45 23</a>
 						</div>
 					</div>
 
-					<div class="col-md-4 mb-5 mb-md-0">
-						<div class="feature-block">
-							<div class="feature-icon text-primary mb-4">
-								<div class="mx-auto">
-									<i class="ti-location-pin"></i>
-								</div>
+					<div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
+						<div class="contact-info-card-compact">
+							<div class="contact-icon-small">
+								<i class="fas fa-map-marker-alt"></i>
 							</div>
-							<p class="text-center">
+							<p class="contact-label">Adres</p>
+							<p class="contact-value">
 								2719 Embassy Dr, West Palm Beach, FL 33401
 								<br />
-								 Amerika Birleşik Devletleri 777
+								Amerika 
 							</p>
 						</div>
 					</div>
 
-					<div class="col-md-4">
-						<div class="feature-block">
-							<div class="feature-icon text-primary mb-4">
-								<div class="mx-auto">
-									<i class="ti-email"></i>
-								</div>
+					<div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
+						<div class="contact-info-card-compact">
+							<div class="contact-icon-small">
+								<i class="fas fa-envelope"></i>
 							</div>
-							<p class="text-center">
-								<a href="mailto:glserenkarts@gmail.com" class="text-dark">glserenkarts@gmail.com</a><br />
-							</p>
+							<p class="contact-label">Email</p>
+							<a href="mailto:glserenkarts@gmail.com" class="contact-value">glserenkarts@gmail.com</a>
 						</div>
 					</div>
 				</div>
-				<div class="contact-form">
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-lg-10 mx-lg-auto">
+				<div class="contact-form-modern" data-aos="fade-up" data-aos-delay="300">
 					<form class="mb-0" id="contactForm" autocomplete="off">
-						<div class="form-row">
+						<div class="row g-4">
 							<div class="form-process"></div>
 
-							<div class="col-12 col-md-6">
-								<div class="form-group error-text-white">
-									<input type="text" name="NameSurname" placeholder="İsminiz" class="form-control required">
+							<div class="col-md-6">
+								<div class="form-floating-modern">
+									<i class="form-icon fas fa-user"></i>
+									<input type="text" name="NameSurname" placeholder=" " class="form-control-modern required" id="name">
+									<label for="name">İsim Soyisim</label>
 								</div>
 							</div>
 
-							<div class="col-12 col-md-6">
-								<div class="form-group error-text-white">
-									<input type="email" name="EmailAddress" placeholder="E-posta" class="form-control required">
+							<div class="col-md-6">
+								<div class="form-floating-modern">
+									<i class="form-icon fas fa-envelope"></i>
+									<input type="email" name="EmailAddress" placeholder=" " class="form-control-modern required" id="email">
+									<label for="email">E-posta Adresiniz</label>
 								</div>
 							</div>
 
 							<div class="col-12">
-								<div class="form-group error-text-white">
-									<input type="text" name="Subject" placeholder="Konu" class="form-control">
+								<div class="form-floating-modern">
+									<i class="form-icon fas fa-tag"></i>
+									<input type="text" name="Subject" placeholder=" " class="form-control-modern" id="subject">
+									<label for="subject">Konu</label>
 								</div>
 							</div>
 
-							<div class="col-12 mb-4">
-								<div class="form-group error-text-white">
-									<textarea name="MessageDetail" placeholder="Mesajınız" class="form-control required" rows="7"></textarea>
+							<div class="col-12">
+								<div class="form-floating-modern">
+									<i class="form-icon fas fa-comment-dots"></i>
+									<textarea name="MessageDetail" placeholder=" " class="form-control-modern required" rows="6" id="message"></textarea>
+									<label for="message">Mesajınız</label>
 								</div>
 							</div>
 
@@ -89,16 +98,344 @@
 							</div>
 
 							<div class="col-12 text-center">
-								<button class="btn btn-primary" type="submit" id="sendBtn">Mesaj Gönder</button>
+								<button class="btn-modern-submit" type="submit" id="sendBtn">
+									<span class="btn-text">
+										<i class="fas fa-paper-plane me-2"></i>
+										Mesajı Gönder
+									</span>
+									<span class="btn-loading" style="display: none;">
+										<i class="fas fa-spinner fa-spin me-2"></i>
+										Gönderiliyor...
+									</span>
+								</button>
 							</div>
 						</div>
 					</form>
-					<div class="contact-form-result text-center" id="formResult"></div>
+					<div class="contact-form-result text-center mt-4" id="formResult"></div>
 				</div>
 			</div>
 		</div>
 	</div>
 </section>
+
+<style>
+.contact-section {
+	padding: 60px 0;
+	background: #f8f9fa;
+	position: relative;
+	overflow: hidden;
+}
+
+.contact-bg-shapes {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	top: 0;
+	left: 0;
+	overflow: hidden;
+	z-index: 0;
+}
+
+.shape {
+	position: absolute;
+	opacity: 0.1;
+	animation: float 20s infinite;
+}
+
+.shape-1 {
+	width: 300px;
+	height: 300px;
+	background: radial-gradient(circle, rgba(255,255,255,0.8) 0%, transparent 70%);
+	top: -100px;
+	right: -100px;
+	animation-delay: 0s;
+}
+
+.shape-2 {
+	width: 200px;
+	height: 200px;
+	background: radial-gradient(circle, rgba(255,255,255,0.6) 0%, transparent 70%);
+	bottom: 50px;
+	left: 50px;
+	animation-delay: 5s;
+}
+
+.shape-3 {
+	width: 250px;
+	height: 250px;
+	background: radial-gradient(circle, rgba(255,255,255,0.5) 0%, transparent 70%);
+	top: 50%;
+	left: 50%;
+	animation-delay: 10s;
+}
+
+@@keyframes float {
+	0%, 100% {
+		transform: translate(0, 0) rotate(0deg);
+	}
+	33% {
+		transform: translate(30px, -50px) rotate(120deg);
+	}
+	66% {
+		transform: translate(-20px, 20px) rotate(240deg);
+	}
+}
+
+.contact-info-card-compact {
+	background: rgba(255, 255, 255, 0.95);
+	border-radius: 12px;
+	padding: 18px 15px;
+	text-align: center;
+	transition: all 0.3s ease;
+	border: 1px solid rgba(255, 255, 255, 0.3);
+	backdrop-filter: blur(10px);
+	box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+	position: relative;
+	overflow: hidden;
+}
+
+.contact-info-card-compact::after {
+	content: '';
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	height: 3px;
+	background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+	transform: scaleX(0);
+	transition: transform 0.3s;
+}
+
+.contact-info-card-compact:hover::after {
+	transform: scaleX(1);
+}
+
+.contact-info-card-compact:hover {
+	transform: translateY(-5px);
+	box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.contact-icon-small {
+	width: 40px;
+	height: 40px;
+	margin: 0 auto 10px;
+	background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+	border-radius: 10px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 1rem;
+	color: white;
+	box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+	transition: all 0.3s;
+}
+
+.contact-info-card-compact:hover .contact-icon-small {
+	transform: scale(1.1) rotate(5deg);
+}
+
+.contact-label {
+	font-weight: 600;
+	color: #4a5568;
+	margin-bottom: 5px;
+	font-size: 0.75rem;
+	text-transform: uppercase;
+	letter-spacing: 0.5px;
+}
+
+.contact-value {
+	color: #2d3748;
+	text-decoration: none;
+	display: block;
+	font-weight: 600;
+	font-size: 0.9rem;
+	transition: color 0.3s;
+}
+
+.contact-value:hover {
+	color: #667eea;
+}
+
+.contact-form-modern {
+	background: rgba(255, 255, 255, 0.95);
+	border-radius: 15px;
+	padding: 25px;
+	backdrop-filter: blur(10px);
+	box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+	border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.form-floating-modern {
+	position: relative;
+	margin-bottom: 15px;
+}
+
+.form-icon {
+	position: absolute;
+	left: 15px;
+	top: 50%;
+	transform: translateY(-50%);
+	color: #667eea;
+	font-size: 1rem;
+	z-index: 2;
+	transition: all 0.3s;
+}
+
+textarea ~ .form-icon {
+	top: 20px;
+	transform: none;
+}
+
+.form-control-modern {
+	width: 100%;
+	padding: 14px 16px 14px 45px;
+	border: 1px solid #e2e8f0;
+	border-radius: 10px;
+	font-size: 0.95rem;
+	color: #2d3748;
+	background: white;
+	transition: all 0.3s;
+	font-family: inherit;
+}
+
+.form-control-modern:focus {
+	outline: none;
+	border-color: #667eea;
+	box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+}
+
+.form-control-modern:focus ~ .form-icon {
+	color: #764ba2;
+	transform: translateY(-50%) scale(1.1);
+}
+
+textarea.form-control-modern {
+	resize: none;
+	padding-top: 14px;
+	min-height: 100px;
+}
+
+.form-floating-modern label {
+	position: absolute;
+	left: 45px;
+	top: 50%;
+	transform: translateY(-50%);
+	color: #718096;
+	font-size: 0.9rem;
+	pointer-events: none;
+	transition: all 0.3s;
+	background: white;
+	padding: 0 5px;
+}
+
+textarea ~ label {
+	top: 20px;
+	transform: none;
+}
+
+.form-control-modern:focus ~ label,
+.form-control-modern:not(:placeholder-shown) ~ label {
+	top: -8px;
+	left: 40px;
+	font-size: 0.7rem;
+	color: #667eea;
+	font-weight: 600;
+}
+
+.btn-modern-submit {
+	padding: 12px 35px;
+	background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+	border: none;
+	border-radius: 50px;
+	color: white;
+	font-size: 0.95rem;
+	font-weight: 700;
+	cursor: pointer;
+	transition: all 0.3s;
+	box-shadow: 0 6px 15px rgba(102, 126, 234, 0.4);
+	position: relative;
+	overflow: hidden;
+}
+
+.btn-modern-submit::before {
+	content: '';
+	position: absolute;
+	top: 0;
+	left: -100%;
+	width: 100%;
+	height: 100%;
+	background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+	transition: left 0.5s;
+}
+
+.btn-modern-submit:hover::before {
+	left: 100%;
+}
+
+.btn-modern-submit:hover {
+	transform: translateY(-3px);
+	box-shadow: 0 12px 30px rgba(102, 126, 234, 0.5);
+}
+
+.btn-modern-submit:active {
+	transform: translateY(-1px);
+}
+
+.btn-modern-submit:disabled {
+	opacity: 0.7;
+	cursor: not-allowed;
+}
+
+.contact-form-result .alert {
+	border-radius: 15px;
+	padding: 20px;
+	font-weight: 600;
+	animation: slideIn 0.5s ease-out;
+	border: none;
+}
+
+.contact-form-result .alert-success {
+	background: linear-gradient(135deg, #84fab0 0%, #8fd3f4 100%);
+	color: #065f46;
+}
+
+.contact-form-result .alert-danger {
+	background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+	color: #7f1d1d;
+}
+
+@@keyframes slideIn {
+	from {
+		opacity: 0;
+		transform: translateY(-20px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+@@media (max-width: 768px) {
+	.contact-form-modern {
+		padding: 20px 15px;
+	}
+	
+	.btn-modern-submit {
+		padding: 12px 30px;
+		font-size: 0.9rem;
+	}
+	
+	.contact-info-card-compact {
+		padding: 15px 12px;
+	}
+	
+	.contact-icon-small {
+		width: 35px;
+		height: 35px;
+		font-size: 0.9rem;
+	}
+}
+</style>
 
 <script>
 	document.getElementById('contactForm').addEventListener('submit', function(e) {
@@ -112,10 +449,13 @@
 		};
 
 		const btn = document.getElementById('sendBtn');
+		const btnText = btn.querySelector('.btn-text');
+		const btnLoading = btn.querySelector('.btn-loading');
 		const resultDiv = document.getElementById('formResult');
 
 		btn.disabled = true;
-		btn.textContent = 'Gönderiliyor...';
+		btnText.style.display = 'none';
+		btnLoading.style.display = 'inline';
 
 		fetch('/Default/SendMessage', {
 			method: 'POST',
@@ -127,19 +467,20 @@
 		.then(res => res.json())
 		.then(data => {
 			if (data.success) {
-				resultDiv.innerHTML = '<div class="alert alert-success mt-3">' + data.message + '</div>';
+				resultDiv.innerHTML = '<div class="alert alert-success">✅ ' + data.message + '</div>';
 				document.getElementById('contactForm').reset();
 			} else {
-				resultDiv.innerHTML = '<div class="alert alert-danger mt-3">' + data.message + '</div>';
+				resultDiv.innerHTML = '<div class="alert alert-danger">❌ ' + data.message + '</div>';
 			}
 		})
 		.catch(error => {
 			console.error('Hata:', error);
-			resultDiv.innerHTML = '<div class="alert alert-danger mt-3">Bir hata oluştu!</div>';
+			resultDiv.innerHTML = '<div class="alert alert-danger">❌ Bir hata oluştu! Lütfen tekrar deneyin.</div>';
 		})
 		.finally(() => {
 			btn.disabled = false;
-			btn.textContent = 'Mesaj Gönder';
+			btnText.style.display = 'inline';
+			btnLoading.style.display = 'none';
 
 			// 5 saniye sonra mesajı kaldır
 			setTimeout(() => {

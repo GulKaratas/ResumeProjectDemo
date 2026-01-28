@@ -1,48 +1,450 @@
 ﻿@model (ResumeProjectDemo.Entities.About about, List<ResumeProjectDemo.Entities.Experience> experiences)
 
-<section id="about">
+<section id="about" class="about-section-modern">
 	<div class="container">
-		<div class="section-title h2 text-center mb-8">
-			<h2 class="mb-0">Hakkımda</h2>
-			<span class="title-letter">G</span>
+		<div class="section-title-modern text-center mb-5">
+			<span class="section-subtitle">BEN KİMİM?</span>
+			<h2 class="section-main-title">Hakkımda</h2>
+			<div class="title-underline"></div>
 		</div>
-		<div class="row">
-			<div class="col-md-6 col-lg-4 d-none d-lg-block">
-				<img class="img-fluid w-100 rounded" src="@Model.about.ImageUrl" alt="">
-			</div>
-			<div class="col-lg-8">
-				<h3>@Model.about.NameSurname</h3>
-				<p class="lead">@Model.about.Title</p>
-				<p class="mb-5">@Model.about.Description</p>
-				<div class="row mb-8">
-					<div class="col-md-6 mb-5 mb-md-0">
-						<h4 class="mb-4">Eğitim</h4>
-						<p class="h5">Celal Bayar Üniversitesi</p>
-						<p>Yazılım Mühedisliği , 2021 - 2025</p>
-                        <br />
-						<a href="/cv/GülKarataşCV..pdf" download="GülKarataşCV..pdf" class="btn btn-primary">Cv'mi İndirin</a>
-						<a href="mailto:glsrnkarts@gmail.com"
-						   class="btn btn-light scrollto">
-							Bana Mail At
-						</a>
-
+		
+		<div class="row g-4">
+			<div class="col-lg-4">
+				<div class="profile-card" data-aos="fade-right">
+					<div class="profile-image-wrapper">
+						<img class="profile-image" src="@Model.about.ImageUrl" alt="@Model.about.NameSurname">
+						<div class="image-overlay"></div>
 					</div>
-
-					<div class="col-md-6">
-						<h4 class="mb-4">Deneyimlerim</h4>
-						@foreach(var exp in Model.experiences)
-						{
-							<p class="h5">@exp.Title</p>
-							<p>@exp.Description</p>
-							@if(!string.IsNullOrEmpty(exp.WorkDate))
-							{
-								<p class="text-muted">@exp.WorkDate</p>
-							}
-						}
+					<div class="profile-content">
+						<h3 class="profile-name">@Model.about.NameSurname</h3>
+						<p class="profile-title">@Model.about.Title</p>
+						<div class="profile-actions">
+							
+							<a href="/cv/GülKarataşCV..pdf" download="GülKarataşCV..pdf" class="btn-modern btn-primary-modern">Cv'mi İndirin</a>
+							<a href="mailto:glsrnkarts@gmail.com" class="btn-modern btn-secondary-modern">
+								<i class="fas fa-envelope me-2"></i>Mail Gönder
+							</a>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			<div class="col-lg-8">
+				<div class="info-card" data-aos="fade-left">
+					<div class="about-description">
+						<p>@Model.about.Description</p>
 					</div>
 				</div>
 				
+				<div class="row g-3 mt-2">
+					<div class="col-md-6">
+						<div class="education-card" data-aos="fade-up">
+							<div class="card-header-modern">
+								<i class="fas fa-graduation-cap me-2"></i>
+								<h4>Eğitim</h4>
+							</div>
+							<div class="card-body-modern">
+								<h5 class="institution-name">Celal Bayar Üniversitesi</h5>
+								<p class="department">Yazılım Mühendisliği</p>
+								<p class="date-range"><i class="far fa-calendar-alt me-2"></i>2021 - 2025</p>
+							</div>
+						</div>
+					</div>
+					
+					<div class="col-md-6">
+						<div class="experiences-card" data-aos="fade-up" data-aos-delay="100">
+							<div class="card-header-modern">
+								<i class="fas fa-briefcase me-2"></i>
+								<h4>Deneyimlerim</h4>
+							</div>
+							<div class="card-body-modern experiences-scroll">
+								@if(Model.experiences != null && Model.experiences.Any())
+								{
+									@for(int i = 0; i < Model.experiences.Count; i++)
+									{
+										var exp = Model.experiences[i];
+										var shortDescription = exp.Description.Length > 150 ? exp.Description.Substring(0, 100) + "..." : exp.Description;
+										var needsReadMore = exp.Description.Length > 150;
+										
+										<div class="experience-item-modern">
+											<h6 class="exp-title">@exp.Title</h6>
+											@if(!string.IsNullOrEmpty(exp.WorkDate))
+											{
+												<p class="exp-date"><i class="far fa-calendar-alt me-1"></i>@exp.WorkDate</p>
+											}
+											<p class="exp-desc exp-description-short-@i">@shortDescription</p>
+											<p class="exp-desc exp-description-full-@i" style="display: none;">@exp.Description</p>
+											
+											@if(needsReadMore)
+											{
+												<button class="btn-read-more" onclick="toggleDescription(@i)">
+													<span id="toggleText-@i">Devamını Oku</span>
+													<i id="toggleIcon-@i" class="fas fa-chevron-down ms-1"></i>
+												</button>
+											}
+											
+											@if(i < Model.experiences.Count - 1)
+											{
+												<div class="exp-divider"></div>
+											}
+										</div>
+									}
+								}
+								else
+								{
+									<p class="text-muted">Henüz deneyim bilgisi eklenmemiş.</p>
+								}
+							</div>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
 </section>
+
+<script>
+	function toggleDescription(index) {
+		const shortDesc = document.querySelector('.exp-description-short-' + index);
+		const fullDesc = document.querySelector('.exp-description-full-' + index);
+		const toggleText = document.getElementById('toggleText-' + index);
+		const toggleIcon = document.getElementById('toggleIcon-' + index);
+		
+		if (shortDesc.style.display === 'none') {
+			shortDesc.style.display = 'block';
+			fullDesc.style.display = 'none';
+			toggleText.textContent = 'Devamını Oku';
+			toggleIcon.className = 'fas fa-chevron-down ms-1';
+		} else {
+			shortDesc.style.display = 'none';
+			fullDesc.style.display = 'block';
+			fullDesc.style.animation = 'fadeIn 0.3s ease-in';
+			toggleText.textContent = 'Daha Az Göster';
+			toggleIcon.className = 'fas fa-chevron-up ms-1';
+		}
+	}
+</script>
+
+<style>
+	/* Modern About Section */
+	.about-section-modern {
+		padding: 60px 0;
+		background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+		position: relative;
+		overflow: hidden;
+	}
+	
+	.section-title-modern {
+		position: relative;
+		margin-bottom: 50px;
+	}
+	
+	.section-subtitle {
+		font-size: 0.875rem;
+		font-weight: 600;
+		color: #667eea;
+		letter-spacing: 2px;
+		text-transform: uppercase;
+	}
+	
+	.section-main-title {
+		font-size: 2.5rem;
+		font-weight: 800;
+		color: #2d3748;
+		margin: 10px 0;
+	}
+	
+	.title-underline {
+		width: 80px;
+		height: 4px;
+		background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+		margin: 15px auto 0;
+		border-radius: 2px;
+	}
+	
+	/* Profile Card */
+	.profile-card {
+		background: white;
+		border-radius: 20px;
+		overflow: hidden;
+		box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+		transition: all 0.3s ease;
+		height: 100%;
+	}
+	
+	.profile-card:hover {
+		transform: translateY(-10px);
+		box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+	}
+	
+	.profile-image-wrapper {
+		position: relative;
+		overflow: hidden;
+		height: 280px;
+	}
+	
+	.profile-image {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		transition: transform 0.5s ease;
+	}
+	
+	.profile-card:hover .profile-image {
+		transform: scale(1.1);
+	}
+	
+	.image-overlay {
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		height: 50%;
+		background: linear-gradient(to top, rgba(0,0,0,0.5), transparent);
+	}
+	
+	.profile-content {
+		padding: 25px;
+		text-align: center;
+	}
+	
+	.profile-name {
+		font-size: 1.5rem;
+		font-weight: 700;
+		color: #2d3748;
+		margin-bottom: 8px;
+	}
+	
+	.profile-title {
+		color: #667eea;
+		font-size: 1rem;
+		font-weight: 600;
+		margin-bottom: 20px;
+	}
+	
+	.profile-actions {
+		display: flex;
+		flex-direction: column;
+		gap: 10px;
+	}
+	
+	.btn-modern {
+		padding: 12px 20px;
+		border-radius: 10px;
+		font-weight: 600;
+		font-size: 0.9rem;
+		text-decoration: none;
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		transition: all 0.3s ease;
+		border: none;
+	}
+	
+	.btn-primary-modern {
+		background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+		color: white;
+		box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+	}
+	
+	.btn-primary-modern:hover {
+		box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+		transform: translateY(-2px);
+		color: white;
+	}
+	
+	.btn-secondary-modern {
+		background: white;
+		color: #667eea;
+		border: 2px solid #667eea;
+	}
+	
+	.btn-secondary-modern:hover {
+		background: #667eea;
+		color: white;
+		transform: translateY(-2px);
+	}
+	
+	/* Info Card */
+	.info-card {
+		background: white;
+		border-radius: 15px;
+		padding: 25px;
+		box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+		margin-bottom: 15px;
+	}
+	
+	.about-description p {
+		color: #4a5568;
+		line-height: 1.8;
+		font-size: 1rem;
+		margin: 0;
+	}
+	
+	/* Education & Experience Cards */
+	.education-card,
+	.experiences-card {
+		background: white;
+		border-radius: 15px;
+		padding: 20px;
+		box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+		transition: all 0.3s ease;
+		height: 100%;
+		min-height: 280px;
+	}
+	
+	.education-card:hover,
+	.experiences-card:hover {
+		transform: translateY(-5px);
+		box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+	}
+	
+	.card-header-modern {
+		display: flex;
+		align-items: center;
+		margin-bottom: 20px;
+		padding-bottom: 15px;
+		border-bottom: 2px solid #f0f0f0;
+	}
+	
+	.card-header-modern i {
+		color: #667eea;
+		font-size: 1.3rem;
+	}
+	
+	.card-header-modern h4 {
+		margin: 0;
+		font-size: 1.1rem;
+		font-weight: 700;
+		color: #2d3748;
+	}
+	
+	.card-body-modern {
+		color: #4a5568;
+	}
+	
+	.institution-name {
+		font-size: 1.1rem;
+		font-weight: 700;
+		color: #2d3748;
+		margin-bottom: 8px;
+	}
+	
+	.department {
+		color: #667eea;
+		font-weight: 600;
+		margin-bottom: 10px;
+	}
+	
+	.date-range {
+		color: #718096;
+		font-size: 0.9rem;
+		margin-bottom: 0;
+	}
+	
+	/* Experience Items */
+	.experiences-scroll {
+		max-height: 350px;
+		overflow-y: auto;
+		padding-right: 10px;
+	}
+	
+	.experiences-scroll::-webkit-scrollbar {
+		width: 6px;
+	}
+	
+	.experiences-scroll::-webkit-scrollbar-track {
+		background: #f1f1f1;
+		border-radius: 10px;
+	}
+	
+	.experiences-scroll::-webkit-scrollbar-thumb {
+		background: #667eea;
+		border-radius: 10px;
+	}
+	
+	.experience-item-modern {
+		margin-bottom: 15px;
+	}
+	
+	.exp-title {
+		font-size: 1rem;
+		font-weight: 700;
+		color: #2d3748;
+		margin-bottom: 5px;
+	}
+	
+	.exp-date {
+		font-size: 0.8rem;
+		color: #718096;
+		margin-bottom: 8px;
+	}
+	
+	.exp-desc {
+		font-size: 0.875rem;
+		color: #4a5568;
+		line-height: 1.6;
+		margin-bottom: 8px;
+	}
+	
+	.btn-read-more {
+		background: none;
+		border: none;
+		color: #667eea;
+		font-size: 0.8rem;
+		font-weight: 600;
+		cursor: pointer;
+		padding: 0;
+		transition: all 0.2s ease;
+	}
+	
+	.btn-read-more:hover {
+		color: #764ba2;
+		transform: translateX(3px);
+	}
+	
+	.exp-divider {
+		height: 1px;
+		background: #e2e8f0;
+		margin: 15px 0;
+	}
+	
+	/* Animations */
+	@@keyframes fadeIn {
+		from {
+			opacity: 0;
+			transform: translateY(-5px);
+		}
+		to {
+			opacity: 1;
+			transform: translateY(0);
+		}
+	}
+	
+	/* Responsive */
+	@@media (max-width: 991px) {
+		.profile-card {
+			margin-bottom: 30px;
+		}
+		
+		.section-main-title {
+			font-size: 2rem;
+		}
+	}
+	
+	@@media (max-width: 768px) {
+		.about-section-modern {
+			padding: 40px 0;
+		}
+		
+		.profile-image-wrapper {
+			height: 250px;
+		}
+		
+		.education-card,
+		.experiences-card {
+			margin-bottom: 15px;
+			min-height: auto;
+		}
+	}
+</style>

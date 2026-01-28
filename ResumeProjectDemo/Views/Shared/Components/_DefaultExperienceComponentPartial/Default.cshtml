@@ -1,26 +1,283 @@
 ﻿@model List<ResumeProjectDemo.Entities.Experience>
 
-<section id="experience" class="pb-0">
+<section id="experience" class="experience-section">
 	<div class="container">
-		<div class="section-title h2 text-center mb-8">
-			<h2 class="mb-0">Deneyimlerim</h2>
-			<span class="title-letter">D</span>
-		</div>
-
-		@foreach(var experience in Model)
-		{
-			<div class="row">
-				<div class="col-lg-4 mb-1 mb-lg-0">
-					<p class="h5 mb-0">@experience.Title</p>
-					<p class="opacity-75">@experience.WorkDate</p>
-				</div>
-				<div class="col-lg-8">
-<p>@experience.Description</p>
+		<div class="row mb-5">
+			<div class="col-lg-10 col-xl-8 mx-lg-auto text-center">
+				<div class="section-title-modern mb-4">
+					<h2 class="display-4 fw-bold mb-3">Profesyonel Deneyimlerim</h2>
+					<p class="lead text-muted">Çalıştığım şirketler ve üstlendiğim roller</p>
 				</div>
 			</div>
+		</div>
 
-			<hr />
-        }
-
+		@if(Model != null && Model.Any())
+		{
+			<div class="row">
+				<div class="col-lg-10 mx-auto">
+					<div class="timeline">
+						@for(int i = 0; i < Model.Count; i++)
+						{
+							var experience = Model[i];
+							var isEven = i % 2 == 0;
+							
+							<div class="timeline-item @(isEven ? "left" : "right")" data-aos="fade-up" data-aos-delay="@(i * 100)">
+								<div class="timeline-marker">
+									<div class="timeline-dot">
+										<i class="fas fa-briefcase"></i>
+									</div>
+									@if(i < Model.Count - 1)
+									{
+										<div class="timeline-line"></div>
+									}
+								</div>
+								<div class="timeline-content">
+									<div class="experience-card-modern">
+										<div class="experience-badge">
+											<i class="fas fa-calendar-alt me-2"></i>
+											@experience.WorkDate
+										</div>
+										<h4 class="experience-title">@experience.Title</h4>
+										<p class="experience-description">@experience.Description</p>
+										<div class="experience-footer">
+											<span class="experience-tag">
+												<i class="fas fa-code me-1"></i>
+												Deneyim
+											</span>
+										</div>
+									</div>
+								</div>
+							</div>
+						}
+					</div>
+				</div>
+			</div>
+		}
+		else
+		{
+			<div class="row">
+				<div class="col-12 text-center py-5">
+					<div class="empty-state">
+						<i class="fas fa-briefcase text-muted mb-3" style="font-size: 3rem;"></i>
+						<p class="text-muted">Henüz deneyim eklenmemiş.</p>
+					</div>
+				</div>
+			</div>
+		}
 	</div>
+</section>
+
+<style>
+.experience-section {
+	padding: 100px 0;
+	background: #ffffff;
+	position: relative;
+}
+
+.timeline {
+	position: relative;
+	padding: 20px 0;
+}
+
+.timeline::before {
+	content: '';
+	position: absolute;
+	left: 50%;
+	top: 0;
+	bottom: 0;
+	width: 3px;
+	background: linear-gradient(180deg, #667eea 0%, #764ba2 100%);
+	transform: translateX(-50%);
+	border-radius: 50px;
+}
+
+.timeline-item {
+	position: relative;
+	margin-bottom: 50px;
+	display: flex;
+	align-items: flex-start;
+}
+
+.timeline-item.left {
+	flex-direction: row;
+	justify-content: flex-end;
+}
+
+.timeline-item.right {
+	flex-direction: row-reverse;
+	justify-content: flex-end;
+}
+
+.timeline-marker {
+	position: absolute;
+	left: 50%;
+	transform: translateX(-50%);
+	z-index: 2;
+}
+
+.timeline-dot {
+	width: 50px;
+	height: 50px;
+	background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+	border-radius: 50%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	color: white;
+	font-size: 1.2rem;
+	box-shadow: 0 0 0 8px rgba(255, 255, 255, 1), 0 0 0 12px rgba(102, 126, 234, 0.3);
+	transition: all 0.3s ease;
+	position: relative;
+}
+
+.timeline-dot::before {
+	content: '';
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	border-radius: 50%;
+	background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+	animation: pulse 2s infinite;
+	opacity: 0;
+}
+
+@@keyframes pulse {
+	0% {
+		transform: scale(1);
+		opacity: 1;
+	}
+	100% {
+		transform: scale(1.5);
+		opacity: 0;
+	}
+}
+
+.timeline-line {
+	position: absolute;
+	top: 50px;
+	left: 50%;
+	transform: translateX(-50%);
+	width: 3px;
+	height: calc(100% + 50px);
+	background: transparent;
+}
+
+.timeline-content {
+	width: calc(50% - 50px);
+	padding: 0 30px;
+}
+
+.experience-card-modern {
+	background: white;
+	border-radius: 20px;
+	padding: 30px;
+	box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+	transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+	border: 2px solid #f0f0f0;
+	position: relative;
+	overflow: hidden;
+}
+
+.experience-card-modern::before {
+	content: '';
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 5px;
+	height: 100%;
+	background: linear-gradient(180deg, #667eea 0%, #764ba2 100%);
+}
+
+.experience-card-modern:hover {
+	transform: translateY(-5px) scale(1.02);
+	box-shadow: 0 15px 40px rgba(102, 126, 234, 0.2);
+	border-color: #667eea;
+}
+
+.experience-badge {
+	display: inline-block;
+	padding: 6px 15px;
+	background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+	color: white;
+	border-radius: 50px;
+	font-size: 0.85rem;
+	font-weight: 600;
+	margin-bottom: 15px;
+	box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+}
+
+.experience-title {
+	font-size: 1.3rem;
+	font-weight: 700;
+	color: #2d3748;
+	margin-bottom: 15px;
+	line-height: 1.4;
+}
+
+.experience-description {
+	color: #4a5568;
+	line-height: 1.8;
+	margin-bottom: 20px;
+	font-size: 0.95rem;
+}
+
+.experience-footer {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	padding-top: 15px;
+	border-top: 1px solid #e2e8f0;
+}
+
+.experience-tag {
+	font-size: 0.75rem;
+	padding: 5px 12px;
+	background: #f7fafc;
+	color: #667eea;
+	border-radius: 20px;
+	font-weight: 600;
+	border: 1px solid #e2e8f0;
+}
+
+/* Mobile Responsive */
+@@media (max-width: 991px) {
+	.timeline::before {
+		left: 25px;
+	}
+	
+	.timeline-marker {
+		left: 25px;
+	}
+	
+	.timeline-item {
+		flex-direction: row !important;
+		justify-content: flex-start !important;
+	}
+	
+	.timeline-content {
+		width: calc(100% - 80px);
+		padding: 0 0 0 30px;
+	}
+	
+	.timeline-dot {
+		width: 40px;
+		height: 40px;
+		font-size: 1rem;
+	}
+}
+
+@@media (max-width: 576px) {
+	.experience-card-modern {
+		padding: 20px;
+	}
+	
+	.experience-title {
+		font-size: 1.1rem;
+	}
+	
+	.experience-description {
+		font-size: 0.9rem;
+	}
+}
+</style>
 </section>

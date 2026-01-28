@@ -1,0 +1,150 @@
+@model List<ResumeProjectDemo.Entities.Education>
+@{
+    ViewData["Title"] = "EducationList";
+    ViewData["ActivePage"] = "Education";
+    Layout = "~/Views/AdminLayout/Index.cshtml";
+}
+
+<div class="flex-1 overflow-y-auto p-8 custom-scrollbar">
+    <!-- Page Heading -->
+    <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
+        <div>
+            <h1 class="text-4xl font-black tracking-tight mb-1">Eğitim Listesi</h1>
+            <p class="text-slate-500 dark:text-slate-400">Eğitim içeriklerinizi düzenleyebilir veya yönetebilirsiniz.</p>
+        </div>
+        <a href="/Education/CreateEducation/" class="bg-primary hover:bg-primary/90 text-white px-6 py-2.5 rounded-lg font-bold text-sm transition-all flex items-center gap-2 shadow-lg shadow-primary/20">
+            <span class="material-symbols-outlined text-lg">add</span>
+            Yeni Eğitim Girişi
+        </a>
+    </div>
+    <!-- Table Container Card -->
+    <div class="bg-white dark:bg-surface-dark border border-slate-200 dark:border-border-dark rounded-xl overflow-hidden shadow-sm">
+        <!-- Search & Filters -->
+        <div class="p-4 border-b border-slate-200 dark:border-border-dark flex flex-col lg:flex-row gap-4 justify-between items-center">
+            <div class="w-full lg:max-w-md relative">
+                <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-[20px]">search</span>
+                <input class="w-full pl-10 pr-4 py-2 bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-border-dark rounded-lg text-sm focus:ring-1 focus:ring-primary focus:border-primary transition-all placeholder:text-slate-500" placeholder="Okul veya bölüm adına göre ara..." type="text" />
+            </div>
+            <div class="flex items-center gap-2 overflow-x-auto w-full lg:w-auto pb-1 lg:pb-0">
+                <button class="px-4 py-1.5 text-xs font-bold rounded-full bg-primary text-white whitespace-nowrap">Tüm Eğitimler</button>
+                <button class="px-4 py-1.5 text-xs font-bold rounded-full bg-slate-100 dark:bg-white/5 text-slate-500 dark:text-slate-400 hover:text-primary whitespace-nowrap transition-colors">Üniversite</button>
+                <button class="px-4 py-1.5 text-xs font-bold rounded-full bg-slate-100 dark:bg-white/5 text-slate-500 dark:text-slate-400 hover:text-primary whitespace-nowrap transition-colors">Lise</button>
+                <button class="px-4 py-1.5 text-xs font-bold rounded-full bg-slate-100 dark:bg-white/5 text-slate-500 dark:text-slate-400 hover:text-primary whitespace-nowrap transition-colors">Sertifika</button>
+            </div>
+        </div>
+        <!-- Data Table -->
+        <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse">
+                <thead>
+                    <tr class="bg-slate-50 dark:bg-black/20 text-slate-500 dark:text-slate-400 uppercase text-[10px] tracking-widest font-bold">
+                        <th class="px-6 py-4 border-b dark:border-border-dark">#</th>
+                        <th class="px-6 py-4 border-b dark:border-border-dark">Okul Adı</th>
+                        <th class="px-6 py-4 border-b dark:border-border-dark">Bölüm</th>
+                        <th class="px-6 py-4 border-b dark:border-border-dark text-center">Eğitim Tarihi</th>
+                        <th class="px-6 py-4 border-b dark:border-border-dark">Açıklama</th>
+                        <th  class="px-6 py-4 border-b dark:border-border-dark text-center w-16">Sil</th>
+                        <th class="px-6 py-4 border-b dark:border-border-dark text-center w-20">Güncelle</th>
+                    </tr>
+                </thead>
+
+                <tbody class="divide-y divide-slate-200 dark:divide-border-dark">
+                    @foreach (var education in Model)
+                    {
+                        <tr class="hover:bg-slate-50 dark:hover:bg-white/5 transition-colors group">
+
+                            <!-- # -->
+                            <td class="px-6 py-4">
+                                <div class="flex items-center gap-3">
+                                    <div class="size-8 rounded bg-primary/20 flex items-center justify-center text-primary font-bold text-xs">
+                                        @education.EducationId
+                                    </div>
+                                </div>
+                            </td>
+
+                            <!-- Okul Adı -->
+                            <td class="px-6 py-4 text-xs font-mono text-slate-500">
+                                @education.SchoolName
+                            </td>
+
+                            <!-- Bölüm -->
+                            <td class="px-6 py-4 text-xs font-mono text-slate-500">
+                                @education.Department
+                            </td>
+
+                            <!-- Tarih -->
+                            <td class="px-6 py-4 text-xs font-mono text-slate-500 text-center">
+                                @education.EducationDate
+                            </td>
+
+                            <!-- Açıklama -->
+                            <td class="px-6 py-4 text-xs font-mono text-slate-500">
+                                @education.Description
+                            </td>
+
+                                     <td class="px-6 py-5 text-right">
+                                <a href="/Education/DeleteEducation/@education.EducationId" class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-red-500 hover:bg-red-600 text-white rounded-lg font-medium text-xs transition-colors">
+                                    <span class="material-symbols-outlined text-[16px]">delete</span>
+                                    Sil
+                                </a>
+                            </td>
+                            <td class="px-6 py-5 text-right">
+                                <a href="/Education/UpdateEducation/@education.EducationId" class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-green-500 hover:bg-green-600 text-white rounded-lg font-medium text-xs transition-colors">
+                                    <span class="material-symbols-outlined text-[16px]">edit</span>
+                                    Güncelle
+                                </a>
+                            </td>
+
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+        </div>
+        <!-- Pagination -->
+        <div class="p-4 bg-slate-50 dark:bg-black/10 flex items-center justify-between">
+            <p class="text-[11px] text-slate-500 font-bold uppercase tracking-widest">Toplam @Model.Count Eğitim Bulunmaktadır.</p>
+            <div class="flex gap-1">
+                <button class="size-8 flex items-center justify-center rounded border border-slate-200 dark:border-border-dark hover:bg-white dark:hover:bg-white/5 transition-colors text-slate-500">
+                    <span class="material-symbols-outlined text-[18px]">chevron_left</span>
+                </button>
+                <button class="size-8 flex items-center justify-center rounded border border-primary bg-primary text-white font-bold text-xs">1</button>
+                <button class="size-8 flex items-center justify-center rounded border border-slate-200 dark:border-border-dark hover:bg-white dark:hover:bg-white/5 transition-colors text-slate-500 font-bold text-xs">2</button>
+                <button class="size-8 flex items-center justify-center rounded border border-slate-200 dark:border-border-dark hover:bg-white dark:hover:bg-white/5 transition-colors text-slate-500 font-bold text-xs">3</button>
+                <button class="size-8 flex items-center justify-center rounded border border-slate-200 dark:border-border-dark hover:bg-white dark:hover:bg-white/5 transition-colors text-slate-500">
+                    <span class="material-symbols-outlined text-[18px]">chevron_right</span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <!-- Bottom Stats Cards -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
+        <div class="bg-white dark:bg-surface-dark border border-slate-200 dark:border-border-dark p-6 rounded-xl">
+            <p class="text-[10px] text-slate-500 font-black uppercase tracking-[0.2em] mb-2">Toplam Eğitim</p>
+            <div class="flex items-end gap-3">
+                <h3 class="text-3xl font-bold">@Model.Count</h3>
+                <span class="text-xs text-primary font-bold mb-1">Aktif</span>
+            </div>
+        </div>
+        <div class="bg-white dark:bg-surface-dark border border-slate-200 dark:border-border-dark p-6 rounded-xl">
+            <p class="text-[10px] text-slate-500 font-black uppercase tracking-[0.2em] mb-2">Üniversite</p>
+            <div class="flex items-end gap-3">
+                <h3 class="text-3xl font-bold">@Model.Count(e => e.SchoolName.Contains("Üniversite"))</h3>
+                <span class="text-xs text-emerald-500 font-bold mb-1">Kayıt</span>
+            </div>
+        </div>
+        <div class="bg-white dark:bg-surface-dark border border-slate-200 dark:border-border-dark p-6 rounded-xl">
+            <p class="text-[10px] text-slate-500 font-black uppercase tracking-[0.2em] mb-2">Sertifika</p>
+            <div class="flex items-end gap-3">
+                <h3 class="text-3xl font-bold">@Model.Count(e => e.SchoolName.Contains("Sertifika"))</h3>
+                <div class="flex gap-0.5 mb-2">
+                    <div class="w-1 h-3 bg-primary rounded-full"></div>
+                    <div class="w-1 h-3 bg-primary rounded-full"></div>
+                    <div class="w-1 h-3 bg-primary rounded-full"></div>
+                    <div class="w-1 h-3 bg-primary/20 rounded-full"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
